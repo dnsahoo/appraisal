@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>GlobalLogic Appraisal System</title>
+            <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+            <link rel="stylesheet" type="text/css" href="css/styles.css" />
+            
+            <script type="text/javascript" src="js/jquery.min.js"></script>
+            <script type="text/javascript" src="js/bootstrap.js"></script>
+            <script type="text/javascript" src="js/jquery.validate.js"></script>
+            <script type="text/javascript" src="js/login.js"></script>
+    </head>
+    <body>
+        <div id="wrap">
+            <div class="container">
+                <div class="centered">
+                    <a class="logo" href="#">GlobalLogic Appraisal System - <?php echo date('Y'); ?></a>
+                    <div class="login-box">
+			<?php
+                        echo $this->flashMessenger()
+                                ->setMessageOpenFormat('<div%s><p>')
+                                ->setMessageSeparatorString('</p><p>')
+                                ->setMessageCloseString('</p></div>')
+                                ->render('error');
+                       ?>
+                        <form class="form-inline" role="form" method="post" id="login" action="/login">
+                            <div class="form-group">
+                                <label>User name</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password"/>
+                                </div>
+                            </div>
+                            <div class="clearfix ">
+                                
+                                <div class="pull-right text-right">
+			            <input type="submit" id="submit_btn" name="submit_btm" value="Log In" class="btn btn-primary" />
+<!--                                    <button class="btn btn-primary" type="button" name="login" id="login-btn">Log In</button>-->
+                                    
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div class="footer">
+                <div class="container">
+                    <div class="row text-center"> <span>&copy; <?php echo date('Y') ?> Copyright. All Rights Reserved.</span> </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

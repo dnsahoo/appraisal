@@ -1,0 +1,45 @@
+appraisal
+	id
+	type "appraisal type/label",
+
+appraisal_rate
+	id
+	name
+	val
+	
+employee_appraisal
+	id
+	name
+	email
+	eid
+	process
+	doj
+	period
+
+manager
+	id
+	email
+	pwd
+	
+hierarchy 
+	id
+	emp_id
+	mngr_id
+	
+rating
+	id
+	emp_id
+	aprsl_id
+	aprsl_val
+	comment
+	self_manager
+	
+feedback
+	id
+	emp_id
+	major_resoponsbilties 
+	extra_mile
+	manager_lead_comment
+	notable_accomplishments
+	overall_fb
+	

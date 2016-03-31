@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+            <?php echo $this->headTitle('File Organizer');?>
+            <?php echo $this->headLink()
+                    ->prependStylesheet($this->basePath() . '/css/bootstrap.css')
+                    ->prependStylesheet($this->basePath() . '/css/styles.css')
+		    ->prependStylesheet($this->basePath() . '/css/bootstrap-select.css')
+                    ->prependStylesheet($this->basePath() . '/css/font-awesome.css')
+		    //->prependStylesheet($this->basePath() . '/css/jquery.mffCustomScrollbar.css')
+                    ->prependStylesheet($this->basePath() . '/css/datepicker.css')
+                    ->prependStylesheet($this->basePath(). '/css/datatables.css')
+                    ->prependStylesheet($this->basePath(). '/css/TreeMenu.css');
+            ?>
+            <?php
+                $this->headScript ()->prependFile ($this->basePath () . '/js/jquery.min.js');
+                 echo $this->headScript()
+                        ->appendFile($this->basePath() . '/js/bootstrap.js')
+                        ->appendFile($this->basePath() . '/js/bootstrap-datepicker.js')
+	                ->appendFile($this->basePath() . '/js/bootstrap-select.js')
+                        ->appendFile($this->basePath() . '/js/bootstrap-filestyle.js')
+			->appendFile($this->basePath() . '/js/jquery.nicescroll.js')
+			//->appendFile($this->basePath() . '/js/jquery.mCduffstomScrollbar.concat.min.js')
+                        ->appendFile($this->basePath() . '/js/jquery.validate.js')
+                        ->appendFile($this->basePath() . '/js/jquery.dataTables.min.js');
+            ?>
+    </head>
+    <body>
+        <div id="wrap">
+            <!--Header Section [Start]-->
+            <?php echo $this->partial('layout/header', array()); ?>
+            <!--Header Section [End]-->
+
+            <?php echo $this->content; ?>
+
+        </div>
+        <!--Footer Section [Start]-->
+        <?php echo $this->partial('layout/footer', array()); ?>
+        <!--Footer Section [End]--> 
+
+    </body>
+</html>

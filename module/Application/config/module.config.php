@@ -17,7 +17,17 @@ return array(
                 'options' => array(
                     'route'    => '/',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
+                        'controller' => 'Application\Controller\Login',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'login' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/login',
+                    'defaults' => array(
+                    'controller' => 'Application\Controller\Login',
                         'action'     => 'index',
                     ),
                 ),
@@ -75,7 +85,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => Controller\IndexController::class
+            'Application\Controller\Index' => Controller\IndexController::class,
+            'Application\Controller\Login' => 'Application\Controller\LoginController'
         ),
     ),
     'view_manager' => array(
