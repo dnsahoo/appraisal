@@ -50,24 +50,21 @@ class LoginController extends AbstractActionController
     }
     public function indexAction()
     {
+
         $this->layout('layout/login');
         //if already login, redirect to Dashboard 
 	 if ($this->getAuthService()->hasIdentity()){
-            return $this->redirect()->toRoute('dashboard');
+            return $this->redirect()->toRoute('application');
         }
         $request = $this->getRequest();
         if ($request->isPost()){
                 //check authentication...
-                $pwdPassWord= sha1($request->getPost('password'));
+                $pwdPassWord= md5($request->getPost('password'));
                 
                 // get the db adapter
                 $sm = $this->getServiceLocator();
                 $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                echo 55;
-                $statement = $dbAdapter->createStatement("select * from manager");
-                echo 11111;
-$result = $statement->execute();
-print_r($result);die;
+                
                 // create auth adapter
                 $authAdapter = new AuthAdapter($dbAdapter);
 		//$select = $authAdapter->getDbSelect();
@@ -83,19 +80,14 @@ print_r($result);die;
                 $authService->setAdapter($authAdapter);
                 // authenticate
                 $result = $authService->authenticate();
-                echo 133;die;
-                
                 
                 if ($result->isValid()) {
-                    echo 2;die;
                     $user_data = $this->getManagerTable()->fetchAll(array('email' => $request->getPost('username')))->current();
                     $userData = $authAdapter->getResultRowObject();
                     
                     $this->getSessionStorage()->setUserData($userData);
-                    echo 666;die;
-                    return $this->redirect()->toRoute('dashboard');
+                    return $this->redirect()->toRoute('application');
                 }else{
-                    echo 444;die;
                     $this->flashMessenger()->setNamespace('error')
                                            ->addMessage("The username and password is Incorrect.");
                     return $this->redirect()->toRoute('login');                }

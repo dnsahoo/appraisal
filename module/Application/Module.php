@@ -59,13 +59,14 @@ class Module
                     //that password hashed with sha1
                     $dbAdapter           = $sm->get('Zend\Db\Adapter\Adapter');
                     $dbTableAuthAdapter  = new DbTable($dbAdapter,
-                                              'manager','email','pwd');
+                                              'manager','email','pwd', 'MD5(?)');
                     $authService = new AuthenticationService();
                     $authService->setAdapter($dbTableAuthAdapter);
+
                     return $authService;
                 },
-		'Application\Model\AuthStorage' => function($sm) {
-                    return new \Application\Model\AuthStorage('user');
+		        'Application\Model\AuthStorage' => function($sm) {
+                    return new \Application\Model\AuthStorage('manager');
                 }, 
                 'Application\Model\ManagerTable' => function($sm) {
                     $tableGateway = $sm->get('ManagerTableGateway');
@@ -74,7 +75,7 @@ class Module
                 },
                 'ManagerTableGateway' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype = new \ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Manager());
                     return new TableGateway('manager', $dbAdapter, null, $resultSetPrototype);
                 }

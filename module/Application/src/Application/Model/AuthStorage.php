@@ -5,19 +5,16 @@ use Zend\Session\Container;
 class AuthStorage extends Storage\Session
 {
     public function setUserData($userData) {
-        $user_session = new Container('user');
-        $user_session->user_id = $userData->user_id;
-        $user_session->username = $userData->username;
-        $user_session->user_role = $userData->user_role;
-        $user_session->name = $userData->name;
-        $user_session->status = (int)$userData->status;
+        $user_session = new Container('manager');
+        $user_session->id = $userData->id;
+        $user_session->email = $userData->email;
         return;
     }
     public function getUserData($index = '') {
         $value = '';
 
         if ($index != '' && $index != '') {
-            $user_session = new Container('user');
+            $user_session = new Container('manager');
             $value = $user_session->$index;
             if (!$value)
                 $value = '';
