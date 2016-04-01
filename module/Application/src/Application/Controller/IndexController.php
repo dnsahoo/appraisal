@@ -14,6 +14,50 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
+    protected $mngrTable;
+    protected $storage;
+    protected $authservice;
+    protected $empAprslTable;
+    protected $dbAdapter;
+    
+
+    public function getAuthService()
+    {
+        if (!$this->authservice) {
+            $this->authservice = $this->getServiceLocator()->get('AuthService');
+        } 
+        return $this->authservice;
+    }
+    public function getSessionStorage()
+    {
+        if (!$this->storage) {
+            $this->storage = $this->getServiceLocator()->get('Application\Model\AuthStorage');
+        }
+        return $this->storage;
+    }
+    public function getManagerTable() {
+        if (!$this->mngrTable) {
+            $sm = $this->getServiceLocator();
+            $this->mngrTable = $sm->get('Application\Model\ManagerTable');
+        }
+        return $this->mngrTable;
+    }
+    public function getEmpAprslTable() {
+        if (!$this->empAprslTable) {
+            $sm = $this->getServiceLocator();
+            $this->empAprslTable = $sm->get('Application\Model\EmployeeAppraisalTable');
+        }
+        return $this->empAprslTable;
+    }
+    
+    public function getDbAdapter() {
+        if (!$this->dbAdapter) {
+            $config = $this->getServiceLocator ()->get ( 'Config' );
+            $this->dbAdapter = new Adapter($config['db']);
+        }
+        return $this->dbAdapter;
+    }
+    
     public function indexAction()
     {
         return new ViewModel();
@@ -25,7 +69,14 @@ class IndexController extends AbstractActionController
         if ($request->isPost()){
             print_r($request->getPost());
             die;
+            //save data into employee appraisal table
+            
+            
         }
-        return new ViewModel();
+        $this->layout()->setVariable('role', 0);
+        
+        return new ViewModel(array(
+            
+        ));
     }
 }
