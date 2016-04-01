@@ -18,4 +18,14 @@ class IndexController extends AbstractActionController
     {
         return new ViewModel();
     }
+    public function appraisalAction()
+    {
+        $this->layout('layout/appraisal');
+        $request = $this->getRequest();
+        if ($request->isPost()){
+            print_r($request->getPost());
+            die;
+        }
+        return new ViewModel();
+    }
 }
