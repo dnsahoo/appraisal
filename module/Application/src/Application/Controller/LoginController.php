@@ -16,6 +16,7 @@ class LoginController extends AbstractActionController
     protected $mngrTable;
     protected $storage;
     protected $authservice;
+    protected $empAprslTable;
     protected $dbAdapter;
     
 
@@ -39,6 +40,13 @@ class LoginController extends AbstractActionController
             $this->mngrTable = $sm->get('Application\Model\ManagerTable');
         }
         return $this->mngrTable;
+    }
+    public function getEmpAprslTable() {
+        if (!$this->empAprslTable) {
+            $sm = $this->getServiceLocator();
+            $this->empAprslTable = $sm->get('Application\Model\EmployeeAppraisalTable');
+        }
+        return $this->empAprslTable;
     }
     
     public function getDbAdapter() {
@@ -86,7 +94,7 @@ class LoginController extends AbstractActionController
                     $userData = $authAdapter->getResultRowObject();
                     
                     $this->getSessionStorage()->setUserData($userData);
-                    return $this->redirect()->toRoute('application');
+                    return $this->redirect()->toRoute('dashboard');
                 }else{
                     $this->flashMessenger()->setNamespace('error')
                                            ->addMessage("The username and password is Incorrect.");
@@ -104,40 +112,16 @@ class LoginController extends AbstractActionController
 	if (!$this->getAuthService()->hasIdentity()){
             return $this->redirect()->toRoute('login');
         }
-        $config = $this->getServiceLocator ()->get ( 'Config' );
-        $clnts = $this->getClientTable()->fetchAll();
-        $user_id = $this->getSessionStorage()->getUserData('user_id');
-        $role = $this->getSessionStorage()->getUserData('user_role');
-        $where=array('user_id' =>$user_id,'role'=>$role);
-        $activity_log=$this->getActivityLogTable()->getActivityLog($where,$this->getDbAdapter());
-        $count_unread_message=$this->getActivityLogTable()->getCountUnreadActivityLog($where,$this->getDbAdapter());
-        $tmp_case = '';
-        $tmp_ins = '';
-        $tmp_clm = '';
-        $tmp_ky = '';
-        $nw_client_ary = array();
-        foreach ($clnts as $ky => $client){
-            
-            if($tmp_case == $client['case_no'] && !empty($client['case_no'])
-                    && $tmp_ins == $client['insurance_company'] && !empty($client['insurance_company'])){
-                $tmp_clm = $client['claim_no']. ', ' . $tmp_clm;
-                
-                $nw_client_ary[$tmp_ky]['claim_no'] = $tmp_clm;
-                continue;
-            }else{
-                $nw_client_ary[$ky] = $client;
-                $tmp_ky = $ky;
-            }
-            
-            $tmp_case = $client['case_no'];
-            $tmp_ins = $client['insurance_company'];
-            $tmp_clm = $client['claim_no'];
-        }
+        
+        $mngr_id = $this->getSessionStorage()->getUserData('id');
+        $role = $this->getSessionStorage()->getUserData('role');
+        $email = $this->getSessionStorage()->getUserData('email');
+        $empList = $this->getEmpAprslTable()->getEmpListByManagerId($mngr_id, $this->getDbAdapter());
+        
         return new ViewModel(array(
-            'clients' => $nw_client_ary,
+            'empList' => $empList,
             'role' => $role,
-            'activity_log'=>$activity_log,
-            'total_count'=>$count_unread_message
+            'email' => $email,
         ));
          
     }

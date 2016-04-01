@@ -1,0 +1,70 @@
+<?php 
+$this->headScript()->appendFile($this->basePath() . '/js/jquery.dataTables.min.js');
+$this->headScript()->appendFile($this->basePath() . '/js/dashboard.js');
+$this->headLink()->appendStylesheet($this->basePath() . '/css/datatables.css');
+?>
+<div class="search-str">
+    <div class="container">
+        <h4>Welcome <?php echo $email;?>,</h4>
+        <div class="row">
+            <div class="col-md-5 col-sm-5 col-lg-5 text-left pull-left"><span class="dashboard-caption">Your Dashboard</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="container">
+        <div class="row">
+            <div class="wrapper">
+                <div class="panel-body table-responsive " id="tbl_company_my_acounts">
+
+                    <table class="table table-striped table-bordered dataTable" id="datatable_clients">
+                        <thead>
+                            <tr>
+                                <th >No.</th>
+                                <th >Name</th>
+                                <th >Email</th>
+                                <th >Process</th>
+                                <th >Emp ID</th>
+                                <th >DOJ</th>
+                                <th >Assessment Period</th>
+                                <th >Status</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <?php 
+                            if(count($empList) > 0){
+                                $cnt = 0;
+                            foreach ($empList as $emp){ 
+                                $cnt++;
+                                ?>
+                            <tr style="<?php if($emp['complete']==1){echo "color: blue !important;";}?>">
+                                <td><?php echo $this->escapeHtml($cnt);?></td>
+                                <td>
+                                    <a href="<?php echo $this->url('viewemp', array('action' => 'viewemp', 'id' => $emp['id'])); ?>"><?php echo $this->escapeHtml($emp['name']);?></a>
+           			</td>
+                                <td><?php echo $this->escapeHtml($emp['email']);?></td>
+                                <td><?php echo $this->escapeHtml(ucfirst($emp['process']));?></td>
+                                <td><?php echo $this->escapeHtml($emp['eid']);?></td>
+                                <td><?php echo $this->escapeHtml($emp['doj']);?></td>
+                                <td><?php echo $this->escapeHtml($emp['period']);?></td>
+                                <td><?php 
+                                    if($emp['complete']==1)
+                                       echo 'Completed';
+                                    else
+                                       echo 'Needs Review';
+                                ?></td>
+                            </tr>
+                            <?php }
+                            }?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

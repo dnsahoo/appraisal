@@ -8,12 +8,13 @@ class AuthStorage extends Storage\Session
         $user_session = new Container('manager');
         $user_session->id = $userData->id;
         $user_session->email = $userData->email;
+        $user_session->role = $userData->role;
         return;
     }
     public function getUserData($index = '') {
         $value = '';
 
-        if ($index != '' && $index != '') {
+        if ($index != '') {
             $user_session = new Container('manager');
             $value = $user_session->$index;
             if (!$value)

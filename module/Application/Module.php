@@ -14,9 +14,17 @@ use Zend\Mvc\MvcEvent;
 use Zend\Authentication\Adapter\DbTable;
 use Zend\Authentication\Storage;
 use Zend\Authentication\AuthenticationService;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
 
 use Application\Model\Manager;
 use Application\Model\ManagerTable;
+use Application\Model\Employeeappraisal;
+use Application\Model\EmployeeappraisalTable;
+use Application\Model\Feedback;
+use Application\Model\FeedbackTable;
+use Application\Model\Hierarchy;
+use Application\Model\HierarchyTable;
 
 class Module
 {
@@ -75,10 +83,44 @@ class Module
                 },
                 'ManagerTableGateway' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $resultSetPrototype = new \ResultSet();
+                    $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Manager());
                     return new TableGateway('manager', $dbAdapter, null, $resultSetPrototype);
-                }
+                },
+                'Application\Model\EmployeeAppraisalTable' => function($sm) {
+                    $tableGateway = $sm->get('EmployeeAppraisalTableGateway');
+                    $table = new EmployeeappraisalTable($tableGateway);
+                    return $table;
+                },
+                'EmployeeAppraisalTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Manager());
+                    return new TableGateway('employeeappraisal', $dbAdapter, null, $resultSetPrototype);
+                },
+                'Application\Model\Feedback' => function($sm) {
+                    $tableGateway = $sm->get('FeedbackTableGateway');
+                    $table = new FeedbackTable($tableGateway);
+                    return $table;
+                },
+                'FeedbackTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Manager());
+                    return new TableGateway('feedback', $dbAdapter, null, $resultSetPrototype);
+                },
+                'Application\Model\Hierarchy' => function($sm) {
+                    $tableGateway = $sm->get('HierarchyTableGateway');
+                    $table = new HierarchyTable($tableGateway);
+                    return $table;
+                },
+                'HierarchyTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Manager());
+                    return new TableGateway('hierarchy', $dbAdapter, null, $resultSetPrototype);
+                },
+                        
             ),
         );
     }

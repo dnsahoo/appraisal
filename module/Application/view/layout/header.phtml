@@ -8,34 +8,11 @@
                 <div class="menu-hover">
                     <a href="#" ><i class="fa fa-user"></i>
                         <?php //echo $this->layout()->users_info->name; ?></a>
-                    <div class="sub" style="display: none;">
-                        <ul class="sub-options">
-                            <li><a style="font-size:14px;" href="/logout"><i class="fa fa-power-off"></i> Logout</a></li>
-                        </ul>
+                    <div class="sub" style="display: block;">
+                        <a style="font-size:14px;" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                     </div>
                 </div>
-                <?php if (!empty($role_id) && $role_id == 1) { ?>
-                    <a href="/user"><i class="fa fa-users"></i>
-                        User Management</a>
-                    <a href="/clientlist"><i class="fa fa-users"></i> Client List</a>
-                    <a href="/folderlist"><i class="fa fa-users"></i> Folder Management</a>
-                <?php } ?>
             </div>
-
-
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function ()
-    {
-        $(".menu-hover").hover(
-                function () {
-                    $(".sub").slideToggle(400);
-                },
-                function () {
-                    $(".sub").hide();
-                }
-        );
-    });
-</script>

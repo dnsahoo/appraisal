@@ -11,6 +11,7 @@ class Manager
     public $id;
     public $email;
     public $pwd;
+    public $role;
     protected $inputFilter; 
     // Add content to this method:\
     public function exchangeArray($data)
@@ -18,6 +19,7 @@ class Manager
         $this->id     = (isset($data['id'])) ? $data['id'] : null;
         $this->email  = (isset($data['email'])) ? $data['email'] : null;
         $this->pwd    = (isset($data['pwd'])) ? $data['pwd'] : null;
+        $this->role    = (isset($data['role'])) ? $data['role'] : 1;
     }
     public function setInputFilter(InputFilterInterface $inputFilter)
     {

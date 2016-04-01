@@ -2,12 +2,12 @@ appraisal
 	id
 	type "appraisal type/label",
 
-appraisal_rate
+appraisalrate
 	id
 	name
 	val
 	
-employee_appraisal
+employeeappraisal
 	id
 	name
 	email
@@ -15,11 +15,13 @@ employee_appraisal
 	process
 	doj
 	period
+        complete
 
 manager
 	id
 	email
 	pwd
+        role
 	
 hierarchy 
 	id
@@ -32,7 +34,7 @@ rating
 	aprsl_id
 	aprsl_val
 	comment
-	self_manager
+	key_pointers
 	
 feedback
 	id

@@ -42,6 +42,29 @@ return array(
                     ),
                 ),
             ),
+            'dashboard' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/dashboard',
+                    'defaults' => array(
+                    'controller' => 'Application\Controller\Login',
+                        'action'     => 'dashboard',
+                    ),
+                ),
+            ),
+            'viewemp' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route'    => '/viewemp[/:id]',
+                    'constraints' => array(
+                        'id' => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'viewemp',
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
