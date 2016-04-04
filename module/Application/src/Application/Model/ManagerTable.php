@@ -40,7 +40,6 @@ class ManagerTable {
     public function save(Manager $mngr) {
         $data = array(
             'email' => $mngr->email,
-            'pwd'  => sha1($mngr->pwd),
         );
 
         $mngr_id = (int) $mngr->id;
@@ -49,8 +48,11 @@ class ManagerTable {
             return $lastId = $this->tableGateway->getLastInsertValue();
         } else {
             if ($this->getManager($mngr_id)) {
+                $data = array(
+                    'pwd'  => md5($mngr->pwd),
+                );
                 $this->tableGateway->update($data, array('id' => $mngr_id));
-		  return $mngr_id;
+		return $mngr_id;
             } else {
                 throw new \Exception('Form id does not exist');
             }
@@ -70,7 +72,7 @@ class ManagerTable {
         return NULL;
     }
     
-        public function fetchManagerExceptLoginUsr($loginUsr = '') {
+    public function fetchManagerExceptLoginUsr($loginUsr = '') {
         $where = new Where();
         if(!empty($loginUsr))
             $where->notEqualTo('email', $loginUsr);

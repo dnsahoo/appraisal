@@ -64,6 +64,17 @@
 <!-- Text input-->
 
 <div class="form-group">
+  <label class="col-md-4 control-label">Email</label>  
+  <div class="col-md-4 inputGroupContainer">
+  <div class="input-group">
+  <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+  <input  name="email" placeholder="Your Email ID" class="form-control"  type="email">
+    </div>
+  </div>
+</div>
+<!-- Text input-->
+
+<div class="form-group">
   <label class="col-md-4 control-label" >GlobalLogic EID</label> 
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
@@ -116,7 +127,7 @@
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-  <input name="supervisor_or_manager_name" placeholder="SuperVisor / Manager Email" class="form-control"  type="email">
+  <input name="supervisor_or_manager_email" placeholder="SuperVisor / Manager Email" class="form-control"  type="email">
     </div>
   </div>
 </div>
@@ -148,76 +159,21 @@
 </div>
 -->
 <hr>
-
-<!-- Text input-->
-
-<div class="form-group">
- <legend>Taking Responsibility:(completes assignments in a thorough,accurate and timely manner that achieves expected outcomes)</legend>
-  <label class="col-md-4 control-label" >Self Rating(Rate yourself)</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-	<div>
-    <input name="self_rating" type="range" min="0" max="5" data-rangeSlider>
-	<output name="self_rate_result"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Key Pointers</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="key_pointers" placeholder="Key Pointers" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-
-<hr>
-
+<!-- dns changes start-->
 <?php
-if($role == 1){
+foreach($appraisals as $ky => $val){
+    $ky++;
 ?>
 <!-- Text input-->
 
 <div class="form-group">
-   <legend>Manager Review</legend>
-  <label class="col-md-4 control-label" >Manager's Rating</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-    <!--<div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="managers_rating" placeholder="Manager's Rating" class="form-control"  type="text">
-    </div>-->
-	<div>
-    <input name="managers_rating" type="range" min="0" max="5" data-rangeSlider>
-	<output name="managers_rate_result"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Comments</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="comments" placeholder="Comments" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-<?php } ?>
-<hr>
-<!-- Text input-->
-
-<div class="form-group">
-   <legend>Problem Solving:(Identifies and analyzes problems; formulates alternative solutions; takes or recommends appropriate actions; follows upto ensure problems are resolved)</legend>
+ <legend><?php echo $val->type;?></legend>
   <label class="col-md-4 control-label" >Self Rating(Rate yourself)</label> 
     <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
     <div>
-        <input name="self_rating1" type="range" min="0" max="5" data-rangeSlider>
-	<output name="self_rate_result1" ></output>
+        <input name="self_rating_label_<?php echo $ky; ?>" type="hidden" value="<?php echo $ky; ?>">
+        <input name="self_rating_<?php echo $ky; ?>" type="range" min="0" max="5" data-rangeSlider>
+	<output name="self_rate_result_<?php echo $ky; ?>"></output>
     </div>
   </div>
 </div>
@@ -229,451 +185,45 @@ if($role == 1){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="key_pointers1" placeholder="Key Pointers" class="form-control"  cols='20' rows='5'></textarea>
+  <textarea name="key_pointers_<?php echo $ky; ?>" placeholder="Key Pointers" class="form-control"  cols='20' rows='5'></textarea>
     </div>
   </div>
 </div>
 
-<hr>
+    <?php
+    if($role == 1){
+    ?>
+    <!-- Text input-->
 
-<?php
-if($role == 1){
-?>
-<!-- Text input-->
-
-<div class="form-group">
-	<legend>Manager Review</legend>
-  <label class="col-md-4 control-label" >Manager's Rating</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-   <!-- <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="managers_rating1" placeholder="Manager's Rating" class="form-control"  type="text">
-   </div>-->
-    <div>
-    <input name="managers_rating1" type="range" min="0" max="5" data-rangeSlider>
-	<output name="managers_rate_result1" ></output>
+    <div class="form-group">
+       <legend>Manager Review</legend>
+      <label class="col-md-4 control-label" >Manager's Rating</label> 
+        <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
+            <div>
+        <input name="managers_rating_<?php echo $ky; ?>" type="range" min="0" max="5" data-rangeSlider>
+            <output name="managers_rate_result_<?php echo $ky; ?>"></output>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- Text input-->
+    <!-- Text input-->
 
-<div class="form-group">
-  <label class="col-md-4 control-label" >Comments</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="comments1" placeholder="Comments" class="form-control"  cols='20' rows='5'></textarea>
+    <div class="form-group">
+      <label class="col-md-4 control-label" >Comments</label> 
+        <div class="col-md-4 inputGroupContainer">
+        <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+      <textarea name="comments_<?php echo $ky; ?>" placeholder="Comments" class="form-control"  cols='20' rows='5'></textarea>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<?php
-}
-?>
-<hr>
-<!-- Text input-->
-
-<div class="form-group">
-	<legend>Collaboration/Teamwork:(Maintain harmonious and effective work relationships with co-workers and team members)</legend>
-
-  <label class="col-md-4 control-label" >Self Rating(Rate yourself)</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-   <!-- <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="self_rating2" placeholder="Self Rating" class="form-control"  type="text">
-   </div>-->
-   <div>
-    <input name="self_rating2" type="range" min="0" max="5" data-rangeSlider>
-	<output name="self_rate_result2"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Key Pointers</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="key_pointers2" placeholder="Key Pointers" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-
+    <?php } ?>
 <hr>
 <?php
-if($role == 1){
+}//end of foreach
 ?>
-<!-- Text input-->
+<!-- dns changes end-->
 
-<div class="form-group">
-	<legend>Manager Review</legend>
-
-  <label class="col-md-4 control-label" >Manager's Rating</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-    <!--<div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="managers_rating2" placeholder="Manager's Rating" class="form-control"  type="text">
-    </div>-->
-	<div>
-    <input name="managers_rating2" type="range" min="0" max="5" data-rangeSlider>
-	<output name="managers_rate_result2"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Comments</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="comments2" placeholder="Comments" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-<?php
-}
-?>
-<hr>
-<!-- Text input-->
-
-<div class="form-group">
-	<legend>Produces functional deliverables with respect to committed quality level</legend>
-
-  <label class="col-md-4 control-label" >Self Rating(Rate yourself)</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-    <!--<div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="self_rating3" placeholder="Self Rating" class="form-control"  type="text">
-    </div>-->
-	<div>
-    <input name="self_rating3" type="range" min="0" max="5" data-rangeSlider>
-	<output name="self_rate_result3"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Key Pointers</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="key_pointers3" placeholder="Key Pointers" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-
-<hr>
-<?php
-if($role == 1){
-?>
-<!-- Text input-->
-
-<div class="form-group">
-	<legend>Manager Review</legend>
-
-  <label class="col-md-4 control-label" >Manager's Rating</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-    <!--<div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="managers_rating3" placeholder="Manager's Rating" class="form-control"  type="text">
-    </div>-->
-	<div>
-    <input name="managers_rating3" type="range" min="0" max="5" data-rangeSlider>
-	<output name="managers_rate_result3"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Comments</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="comments3" placeholder="Comments" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-<?php
-}
-?>
-<hr>
-<!-- Text input-->
-
-<div class="form-group">
-	<legend>Coverage planning with respect to business requirement(Only for those handling teams)</legend>
-
-  <label class="col-md-4 control-label" >Self Rating(Rate yourself)</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-   <!-- <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="self_rating4" placeholder="Self Rating" class="form-control"  type="text">
-   </div>-->
-   <div>
-    <input name="self_rating4" type="range" min="0" max="5" data-rangeSlider>
-	<output name="self_rate_result4"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Key Pointers</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="key_pointers4" placeholder="Key Pointers" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-
-<hr>
-<?php
-if($role == 1){
-?>
-<!-- Text input-->
-
-<div class="form-group">
-	<legend>Manager Review</legend>
-
-  <label class="col-md-4 control-label" >Manager's Rating</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-   <!-- <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="managers_rating4" placeholder="Manager's Rating" class="form-control"  type="text">
-   </div>-->
-   <div>
-    <input name="managers_rating4" type="range" min="0" max="5" data-rangeSlider>
-	<output name="managers_rate_result4"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Comments</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="comments4" placeholder="Comments" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-
-<?php
-}
-?>
-<hr>
-<!-- Text input-->
-
-<div class="form-group">
-	<legend>Providing scope to Professional development of team members</legend>
-
-  <label class="col-md-4 control-label" >Self Rating(Rate yourself)</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-   <!-- <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="self_rating5" placeholder="Self Rating" class="form-control"  type="text">
-   </div>-->
-   <div>
-    <input name="self_rating5" type="range" min="0" max="5" data-rangeSlider>
-	<output name="self_rate_result5"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Key Pointers</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="key_pointers5" placeholder="Key Pointers" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-
-<hr>
-<?php
-if($role == 1){
-?>
-<!-- Text input-->
-
-<div class="form-group">
-	<legend>Manager Review</legend>
-
-  <label class="col-md-4 control-label" >Manager's Rating</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-    <!--<div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="managers_rating5" placeholder="Manager's Rating" class="form-control"  type="text">
-    </div>-->
-	<div>
-    <input name="managers_rating5" type="range" min="0" max="5" data-rangeSlider>
-	<output name="managers_rate_result5"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Comments</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="comments5" placeholder="Comments" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-<?php
-}
-?>
-<hr>
-<!-- Text input-->
-
-<div class="form-group">
-	<legend>Client relationship management(Escalation management, response to client,sharing reports on timely basis,showcasing organisation commitment)</legend>
-
-  <label class="col-md-4 control-label" >Self Rating(Rate yourself)</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-    <!--<div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="self_rating6" placeholder="Self Rating" class="form-control"  type="text">
-    </div>-->
-	<div>
-    <input name="self_rating6" type="range" min="0" max="5" data-rangeSlider>
-	<output name="self_rate_result6"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Key Pointers</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="key_pointers6" placeholder="Key Pointers" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-
-<hr>
-<?php
-if($role == 1){
-?>
-<!-- Text input-->
-
-<div class="form-group">
-	<legend>Manager Review</legend>
-
-  <label class="col-md-4 control-label" >Manager's Rating</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-    <!--<div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="managers_rating6" placeholder="Manager's Rating" class="form-control"  type="text">
-    </div>-->
-	<div>
-    <input name="managers_rating6" type="range" min="0" max="5" data-rangeSlider>
-	<output name="managers_rate_result6"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Comments</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="comments6" placeholder="Comments" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-<?php
-}
-?>
-<hr>
-<!-- Text input-->
-
-<div class="form-group">
-	<legend>Self Learning (Openness for learning new skills and capabilities,participation in skill development programs driven by organisation,Apply learnings on the job)</legend>
-
-  <label class="col-md-4 control-label" >Self Rating(Rate yourself)</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-    <!--<div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="self_rating7" placeholder="Self Rating" class="form-control"  type="text">
-    </div>-->
-	<div>
-    <input name="self_rating7" type="range" min="0" max="5" data-rangeSlider>
-	<output name="self_rate_result7" ></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Key Pointers</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="key_pointers7" placeholder="Key Pointers" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-
-<hr>
-<?php
-if($role == 1){
-?>
-<!-- Text input-->
-
-<div class="form-group">
-	<legend>Manager Review</legend>
-
-  <label class="col-md-4 control-label" >Manager's Rating</label> 
-    <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
-   <!-- <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
-  <input name="managers_rating7" placeholder="Manager's Rating" class="form-control"  type="text">
-   </div>-->
-   <div>
-    <input name="managers_rating7" type="range" min="0" max="5" data-rangeSlider>
-	<output name="managers_rate_result7"></output>
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Comments</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="comments7" placeholder="Comments" class="form-control"  cols='20' rows='5'></textarea>
-    </div>
-  </div>
-</div>
-<?php
-}
-?>
-<hr>
 <!-- Text input-->
 
 <div class="form-group">
@@ -686,6 +236,9 @@ if($role == 1){
   </div>
 </div>
 
+<?php
+if($role == 1){
+?>
 <!-- Text input-->
 
 <div class="form-group">
@@ -697,7 +250,7 @@ if($role == 1){
     </div>
   </div>
 </div>
-
+<?php } ?>
 <hr>
 <div class="form-group">
   <label class="col-md-4 control-label" >Notable Accomplishments</label> 
@@ -708,7 +261,9 @@ if($role == 1){
     </div>
   </div>
 </div>
-
+<?php
+if($role == 1){
+?>
 <div class="form-group">
   <label class="col-md-4 control-label" >Manager/Lead Comments</label> 
     <div class="col-md-4 inputGroupContainer">
@@ -721,8 +276,6 @@ if($role == 1){
 
 <hr>
 <hr>
-<hr>
-<hr>
 <div class="form-group">
   <label class="col-md-4 control-label" style="font-size:bold;font-size:19px">Overall Manager's Feedback with inline Self Rating</label> 
     <div class="col-md-4 inputGroupContainer">
@@ -732,7 +285,7 @@ if($role == 1){
     </div>
   </div>
 </div>
-
+<?php } ?>
 <!-- Success message -->
 <div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Thanks for contacting us, we will get back to you shortly.</div>
 

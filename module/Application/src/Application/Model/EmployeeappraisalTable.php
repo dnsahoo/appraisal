@@ -17,6 +17,7 @@ use Zend\Db\Sql\Predicate;
 use Zend\Db\Sql\Predicate\Like;
 
 use Application\Model\Rating;
+use Application\Model\Employeeappraisal;
 
 class EmployeeappraisalTable {
 
@@ -48,5 +49,40 @@ class EmployeeappraisalTable {
         $statement = $sql->prepareStatementForSqlObject($select);
         $resultSet = $statement->execute();
         return $resultSet;
+    }
+    
+    public function getEmpById($id) {
+        $id = (int) $id;
+        $rowset = $this->tableGateway->select(array('id' => $id));
+        $row = $rowset->current();
+        if (!$row) {
+            return NULL;
+        }
+        return $row;
+    }
+    
+    public function save(Employeeappraisal $emp) {
+        $data = array(
+            'name'      => $emp->name,
+            'email'     => $emp->email,
+            'eid'       => $emp->eid,
+            'process'   => $emp->process,
+            'doj'       => $emp->doj,
+            'period'    => $emp->period,
+            'complete'  => $emp->complete,
+        );
+
+        $emp_id = (int) $emp->id;
+        if ($emp_id == 0) {
+            $this->tableGateway->insert($data);
+            return $lastId = $this->tableGateway->getLastInsertValue();
+        } else {
+            if ($this->getEmpById($emp_id)) {
+                $this->tableGateway->update($data, array('emp_id' => $emp_id));
+		  return $emp_id;
+            } else {
+                throw new \Exception('Id does not exist');
+            }
+        }
     }
 }

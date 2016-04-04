@@ -10,7 +10,7 @@ use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Predicate\Between;
 use Zend\Db\Sql\Where;
-use Application\Model\Rating;
+use Application\Model\Hierarchy;
 
 class HierarchyTable {
 
@@ -26,5 +26,21 @@ class HierarchyTable {
         });
         $resultSet->buffer();
         return $resultSet;
+    }
+    
+    public function save(Hierarchy $h) {
+        $data = array(
+            'emp_id' => $h->emp_id,
+            'mngr_id' => $h->mngr_id,
+        );
+
+        $h_id = (int) $h->id;
+        if ($h_id == 0) {
+            $this->tableGateway->insert($data);
+            return $lastId = $this->tableGateway->getLastInsertValue();
+        } else {
+                $this->tableGateway->update($data, array('id' => $h_id));
+		return $h_id;
+        }
     }
 }
