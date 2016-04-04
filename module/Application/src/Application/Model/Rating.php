@@ -14,17 +14,17 @@ class Rating {
     public $aprsl_id;
     public $aprsl_rate_id;
     public $comment;
-    public $key_points;
+    public $key_pointers;
     protected $inputFilter;
 
     // Add content to this method:\
     public function exchangeArray($data) {
-        $this->id = (isset($data['id'])) ? $data['id'] : 0;
+        $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->emp_id = (isset($data['emp_id'])) ? $data['emp_id'] : null;
         $this->aprsl_id = (isset($data['aprsl_id'])) ? $data['aprsl_id'] : null;
         $this->aprsl_rate_id = (isset($data['aprsl_rate_id'])) ? $data['aprsl_rate_id'] : null;
         $this->comment = (isset($data['comment'])) ? $data['comment'] : null;
-        $this->key_points = (isset($data['key_points'])) ? $data['key_points'] : null;
+        $this->key_pointers = (isset($data['key_pointers'])) ? $data['key_pointers'] : null;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {

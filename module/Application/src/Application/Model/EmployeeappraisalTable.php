@@ -71,7 +71,6 @@ class EmployeeappraisalTable {
             'period'    => $emp->period,
             'complete'  => $emp->complete,
         );
-
         $emp_id = (int) $emp->id;
         if ($emp_id == 0) {
             $this->tableGateway->insert($data);

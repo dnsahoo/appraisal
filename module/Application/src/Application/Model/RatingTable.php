@@ -19,9 +19,9 @@ class RatingTable {
     public function __construct(TableGateway $tableGateway) {
         $this->tableGateway = $tableGateway;
     }
-    public function getManager($manager_id) {
-        $manager_id = (int) $manager_id;
-        $rowset = $this->tableGateway->select(array('id' => $manager_id));
+    public function getRating($rating_id) {
+        $rating_id = (int) $rating_id;
+        $rowset = $this->tableGateway->select(array('id' => $rating_id));
         $row = $rowset->current();
         if (!$row) {
             return NULL;
@@ -39,13 +39,12 @@ class RatingTable {
     }
     public function save(Rating $rtng) {
         $data = array(
-            'emp_id' => $rtng->emp_id,
-            'aprsl_id'  => $rtng->aprsl_id,
-            'aprsl_rate_id'  => $rtng->aprsl_rate_id,
-            'comment'  => $rtng->comment,
-            'key_points'  => $rtng->key_points,
+            'emp_id'        => $rtng->emp_id,
+            'aprsl_id'      => $rtng->aprsl_id,
+            'aprsl_rate_id' => $rtng->aprsl_rate_id,
+            //'comment'       => $rtng->comment,
+            'key_pointers'    => $rtng->key_pointers,
         );
-
         $rtng_id = (int) $rtng->id;
         if ($rtng_id == 0) {
             $this->tableGateway->insert($data);
@@ -55,7 +54,7 @@ class RatingTable {
             $data = array(
                 'comment'  => $rtng->comment,
             );
-            if ($this->getManager($rtng_id)) {
+            if ($this->getRating($rtng_id)) {
                 $this->tableGateway->update($data, array('id' => $rtng_id));
 		  return $rtng_id;
             } else {

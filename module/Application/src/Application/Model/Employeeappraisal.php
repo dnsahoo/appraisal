@@ -28,7 +28,7 @@ class Employeeappraisal {
         $this->process = (isset($data['process'])) ? $data['process'] : null;
         $this->doj = (isset($data['doj'])) ? $data['doj'] : null;
         $this->period = (isset($data['period'])) ? $data['period'] : null;
-        $this->complete = (isset($data['complete'])) ? $data['complete'] : 0; //0 for not completed
+        $this->complete = (isset($data['complete'])) ? $data['complete'] : '0'; //0 for not completed
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {

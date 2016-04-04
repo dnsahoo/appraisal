@@ -45,7 +45,13 @@
 
 <form class="well form-horizontal" action="/appraisal" method="post"  id="contact_form">
 <fieldset>
-
+<?php
+                        echo $this->flashMessenger()
+                                ->setMessageOpenFormat('<div%s><p>')
+                                ->setMessageSeparatorString('</p><p>')
+                                ->setMessageCloseString('</p></div>')
+                                ->render('success', array('alert', 'alert-success'));
+                       ?>
 <!-- Form Name -->
 <legend>GlobalLogic Self Appraisal form for the period 2015-16</legend>
 <p>We recommend that the Self-Appraisal be completed and submitted to your manager as per timelines.</p>				
@@ -159,6 +165,7 @@
 </div>
 -->
 <hr>
+<input type="hidden" name="period" value="2015-16" />
 <!-- dns changes start-->
 <?php
 foreach($appraisals as $ky => $val){

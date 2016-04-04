@@ -27,6 +27,8 @@ use Application\Model\Hierarchy;
 use Application\Model\HierarchyTable;
 use Application\Model\Appraisal;
 use Application\Model\AppraisalTable;
+use Application\Model\Rating;
+use Application\Model\RatingTable;
 
 class Module
 {
@@ -111,7 +113,7 @@ class Module
                     $resultSetPrototype->setArrayObjectPrototype(new Employeeappraisal());
                     return new TableGateway('employeeappraisal', $dbAdapter, null, $resultSetPrototype);
                 },
-                'Application\Model\Feedback' => function($sm) {
+                'Application\Model\FeedbackTable' => function($sm) {
                     $tableGateway = $sm->get('FeedbackTableGateway');
                     $table = new FeedbackTable($tableGateway);
                     return $table;
@@ -132,6 +134,17 @@ class Module
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Hierarchy());
                     return new TableGateway('hierarchy', $dbAdapter, null, $resultSetPrototype);
+                },
+                'Application\Model\RatingTable' => function($sm) {
+                    $tableGateway = $sm->get('RatingTableGateway');
+                    $table = new RatingTable($tableGateway);
+                    return $table;
+                },
+                'RatingTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Rating());
+                    return new TableGateway('rating', $dbAdapter, null, $resultSetPrototype);
                 },
                         
             ),
