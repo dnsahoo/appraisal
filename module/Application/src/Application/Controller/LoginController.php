@@ -61,8 +61,8 @@ class LoginController extends AbstractActionController
 
         $this->layout('layout/login');
         //if already login, redirect to Dashboard 
-	 if ($this->getAuthService()->hasIdentity()){
-            return $this->redirect()->toRoute('application');
+	if ($this->getAuthService()->hasIdentity()){
+            return $this->redirect()->toRoute('dashboard');
         }
         $request = $this->getRequest();
         if ($request->isPost()){

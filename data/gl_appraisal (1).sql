@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2016 at 11:46 AM
+-- Generation Time: Apr 05, 2016 at 06:53 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `gl_appraisal`
@@ -79,6 +73,7 @@ CREATE TABLE `employeeappraisal` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `designation` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `eid` varchar(15) COLLATE utf8_unicode_ci NOT NULL COMMENT 'employee id',
   `process` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'process belongs to',
   `doj` date NOT NULL COMMENT 'date of joining',
@@ -90,9 +85,9 @@ CREATE TABLE `employeeappraisal` (
 -- Dumping data for table `employeeappraisal`
 --
 
-INSERT INTO `employeeappraisal` (`id`, `name`, `email`, `eid`, `process`, `doj`, `period`, `complete`) VALUES
-(1, 'Amar Kant', 'amar.kant@globallogic.com', '309212', 'Engineering', '2015-05-08', '2015-16', '0'),
-(2, 'Ram Kumar', 'ram.kumar@globallogic.com', '112233', 'Content Engineering', '2014-09-15', '2015-16', '1');
+INSERT INTO `employeeappraisal` (`id`, `name`, `email`, `designation`, `eid`, `process`, `doj`, `period`, `complete`) VALUES
+(1, 'Amar Kant', 'amar.kant@globallogic.com', '', '309212', 'Engineering', '2015-05-08', '2015-16', '0'),
+(2, 'Ram Kumar', 'ram.kumar@globallogic.com', '', '112233', 'Content Engineering', '2014-09-15', '2015-16', '1');
 
 -- --------------------------------------------------------
 
@@ -104,10 +99,10 @@ CREATE TABLE `feedback` (
   `id` int(11) NOT NULL,
   `emp_id` int(11) NOT NULL,
   `major_resoponsbilties` text COLLATE utf8_unicode_ci NOT NULL,
-  `extra_mile` text COLLATE utf8_unicode_ci NOT NULL,
-  `manager_lead_comment` text COLLATE utf8_unicode_ci NOT NULL,
-  `notable_accomplishments` text COLLATE utf8_unicode_ci NOT NULL,
-  `overall_fb` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'overall feedback given by Manager'
+  `extra_mile` text COLLATE utf8_unicode_ci,
+  `manager_lead_comment` text COLLATE utf8_unicode_ci,
+  `notable_accomplishments` text COLLATE utf8_unicode_ci,
+  `overall_fb` text COLLATE utf8_unicode_ci COMMENT 'overall feedback given by Manager'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -246,7 +241,7 @@ ALTER TABLE `rating`
 -- AUTO_INCREMENT for table `appraisal`
 --
 ALTER TABLE `appraisal`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `appraisalrate`
 --
@@ -276,7 +271,4 @@ ALTER TABLE `manager`
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;

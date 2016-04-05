@@ -42,7 +42,7 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/datatables.css');
                             <tr style="<?php if($emp['complete']==1){echo "color: blue !important;";}?>">
                                 <td><?php echo $this->escapeHtml($cnt);?></td>
                                 <td>
-                                    <a href="<?php echo $this->url('viewemp', array('action' => 'viewemp', 'id' => $emp['id'])); ?>"><?php echo $this->escapeHtml($emp['name']);?></a>
+                                    <a href="<?php echo $this->url('review', array('action' => 'review', 'id' => $emp['id'])); ?>"><?php echo $this->escapeHtml($emp['name']);?></a>
            			</td>
                                 <td><?php echo $this->escapeHtml($emp['email']);?></td>
                                 <td><?php echo $this->escapeHtml(ucfirst($emp['process']));?></td>

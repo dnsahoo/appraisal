@@ -38,7 +38,7 @@ class EmployeeappraisalTable {
     public function getEmpListByManagerId($mngr_id, $dbAdapter = NULL) {
         $sql = new Sql($dbAdapter);
         $select = $sql->select();
-        $select->columns(array('id','name','email','eid','process','doj','period', 'complete'));
+        $select->columns(array('id','name','email', 'designation', 'eid','process','doj','period', 'complete'));
         $select->from(array('e' => 'employeeappraisal'))
                ->join(array('h' => 'hierarchy'), 'h.emp_id = e.id', array(), 'left');
                
@@ -63,13 +63,14 @@ class EmployeeappraisalTable {
     
     public function save(Employeeappraisal $emp) {
         $data = array(
-            'name'      => $emp->name,
-            'email'     => $emp->email,
-            'eid'       => $emp->eid,
-            'process'   => $emp->process,
-            'doj'       => $emp->doj,
-            'period'    => $emp->period,
-            'complete'  => $emp->complete,
+            'name'          => $emp->name,
+            'email'         => $emp->email,
+            'designation'   => $emp->designation,
+            'eid'           => $emp->eid,
+            'process'       => $emp->process,
+            'doj'           => $emp->doj,
+            'period'        => $emp->period,
+            'complete'      => $emp->complete,
         );
         $emp_id = (int) $emp->id;
         if ($emp_id == 0) {

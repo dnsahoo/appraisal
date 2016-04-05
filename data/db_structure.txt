@@ -45,4 +45,3 @@ feedback
 	notable_accomplishments
 	overall_fb
 	
-ALTER TABLE `feedback` CHANGE `manager_lead_comment` `manager_lead_comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `overall_fb` `overall_fb` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT 'overall feedback given by Manager';

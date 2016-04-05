@@ -52,16 +52,16 @@ return array(
                     ),
                 ),
             ),
-            'viewemp' => array(
+            'review' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route'    => '/viewemp[/:id]',
+                    'route'    => '/review[/:id]',
                     'constraints' => array(
                         'id' => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',
-                        'action'     => 'viewemp',
+                        'action'     => 'review',
                     ),
                 ),
             ),

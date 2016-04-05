@@ -110,11 +110,12 @@ class IndexController extends AbstractActionController
              */
             $data['name']       = $request->getPost('name');
             $data['email']      = $request->getPost('email');
+            $data['designation']= $request->getPost('designation');
             $data['eid']        = $request->getPost('globallogic_eid');
             $data['process']    = $request->getPost('process');
             $data['doj']        = date('Y-m-d', strtotime($request->getPost('doj')));
             $data['period']     = $request->getPost('period');
-            $data['complete']   = 0; //for new record, its is 0
+            $data['complete']   = '0'; //for new record, its is 0
             $emp = new Employeeappraisal();
             
             $emp->exchangeArray($data);
@@ -122,11 +123,19 @@ class IndexController extends AbstractActionController
             $emp_id = $this->getEmpAprslTable()->save($emp);
             /*
              * save into manager table
+             * 
+             * check manager exist or not
              */
-            $mngr_data['email'] = $request->getPost('supervisor_or_manager_email');
-            $mngr = new Manager();
-            $mngr->exchangeArray($mngr_data);
-            $mngr_id = $this->getManagerTable()->save($mngr);
+            $mngr_row = $this->getManagerTable()->getManagerByEmail($request->getPost('supervisor_or_manager_email'));
+            if(is_null($mngr_row)){
+                $mngr_data['email'] = $request->getPost('supervisor_or_manager_email');
+                $mngr = new Manager();
+                $mngr->exchangeArray($mngr_data);
+                $mngr_id = $this->getManagerTable()->save($mngr);
+            }else{
+                $mngr_id = $mngr_row->id;
+            }
+            
             /*
              * save into hierarchy table
              */
@@ -169,8 +178,26 @@ class IndexController extends AbstractActionController
          * get list of appraisal list
          */
         $this->layout()->setVariable('role', 0);
+        $this->layout()->setVariable('action', 'appraisal');
         $this->layout()->setVariable('appraisals', $appraisals);
         
         
+    }
+    
+    /**
+     * Review appraisal system
+     */
+    public function reviewAction()
+    {
+        //if already login, redirect to Dashboard 
+	if (!$this->getAuthService()->hasIdentity()){
+            return $this->redirect()->toRoute('home');
+        }
+        $this->layout('layout/appraisal');
+        $appraisals = $this->getAppraisalTableTable()->fetchAll();
+        //echo $this->params()->fromRoute('id');
+        $this->layout()->setVariable('role', 1);
+        $this->layout()->setVariable('action', 'review');
+        $this->layout()->setVariable('appraisals', $appraisals);
     }
 }

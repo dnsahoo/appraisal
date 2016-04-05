@@ -12,6 +12,7 @@ class Employeeappraisal {
     public $id;
     public $name;
     public $email;
+    public $designation;
     public $eid;
     public $process;
     public $doj;
@@ -24,6 +25,7 @@ class Employeeappraisal {
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->name = (isset($data['name'])) ? $data['name'] : null;
         $this->email = (isset($data['email'])) ? $data['email'] : null;
+        $this->designation = (isset($data['designation'])) ? $data['designation'] : null;
         $this->eid = (isset($data['eid'])) ? $data['eid'] : null;
         $this->process = (isset($data['process'])) ? $data['process'] : null;
         $this->doj = (isset($data['doj'])) ? $data['doj'] : null;
