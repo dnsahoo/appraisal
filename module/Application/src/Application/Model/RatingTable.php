@@ -34,7 +34,7 @@ class RatingTable {
             $select->where($where);
            
         });
-        $resultSet->buffer();
+        //$resultSet->buffer();
         return $resultSet;
     }
     public function save(Rating $rtng) {
@@ -42,7 +42,6 @@ class RatingTable {
             'emp_id'        => $rtng->emp_id,
             'aprsl_id'      => $rtng->aprsl_id,
             'aprsl_rate_id' => $rtng->aprsl_rate_id,
-            //'comment'       => $rtng->comment,
             'key_pointers'    => $rtng->key_pointers,
         );
         $rtng_id = (int) $rtng->id;
@@ -53,6 +52,7 @@ class RatingTable {
             //only update comments for manager
             $data = array(
                 'comment'  => $rtng->comment,
+                'manager_ratting'  => $rtng->manager_ratting,
             );
             if ($this->getRating($rtng_id)) {
                 $this->tableGateway->update($data, array('id' => $rtng_id));
@@ -62,5 +62,23 @@ class RatingTable {
             }
         }
     }
-	
+    /**
+     * Fetch record from Appraisal and Rating table
+     */
+    public function getAppraisalRating($emp_id, $dbAdapter = NULL) {
+        $sql = new Sql($dbAdapter);
+        $select = $sql->select();
+        $select->columns(array('r_id' => 'id','aprsl_rate_id','comment', 'manager_ratting', 'key_pointers'));
+        $select->from(array('r' => 'rating'))
+               ->join(array('a' => 'appraisal'), 'a.id = r.aprsl_id', array('id','type'), \Zend\Db\Sql\Select::JOIN_INNER);
+               
+        $where = new \Zend\Db\Sql\Where();
+        $where->equalTo('r.emp_id', $emp_id);
+        $select->where($where);
+        $select->order('a.id ASC');
+        
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $resultSet = $statement->execute();
+        return $resultSet;
+    }
 }

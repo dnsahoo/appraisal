@@ -15,6 +15,7 @@ class Rating {
     public $aprsl_rate_id;
     public $comment;
     public $key_pointers;
+    public $manager_ratting;
     protected $inputFilter;
 
     // Add content to this method:\
@@ -25,6 +26,7 @@ class Rating {
         $this->aprsl_rate_id = (isset($data['aprsl_rate_id'])) ? $data['aprsl_rate_id'] : null;
         $this->comment = (isset($data['comment'])) ? $data['comment'] : null;
         $this->key_pointers = (isset($data['key_pointers'])) ? $data['key_pointers'] : null;
+        $this->manager_ratting = (isset($data['manager_ratting'])) ? $data['manager_ratting'] : null;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {

@@ -77,12 +77,11 @@ class EmployeeappraisalTable {
             $this->tableGateway->insert($data);
             return $lastId = $this->tableGateway->getLastInsertValue();
         } else {
-            if ($this->getEmpById($emp_id)) {
-                $this->tableGateway->update($data, array('emp_id' => $emp_id));
-		  return $emp_id;
-            } else {
-                throw new \Exception('Id does not exist');
-            }
+            $data = array(
+                'complete' => $emp->complete,
+            );
+            $this->tableGateway->update($data, array('id' => $emp_id));
+            return $emp_id;
         }
     }
 }

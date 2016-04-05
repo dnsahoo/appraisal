@@ -27,9 +27,12 @@ class FeedbackTable {
         return $resultSet;
     }
     
-    public function getFeedbackId($feedback_id) {
+    public function getFeedbackId($feedback_id = '', $emp_id = '') {
         $feedback_id = (int) $feedback_id;
-        $rowset = $this->tableGateway->select(array('id' => $feedback_id));
+        if($feedback_id != '')
+            $rowset = $this->tableGateway->select(array('id' => $feedback_id));
+        if($emp_id != '')
+            $rowset = $this->tableGateway->select(array('emp_id' => $emp_id));
         $row = $rowset->current();
         if (!$row) {
             return NULL;
@@ -42,9 +45,7 @@ class FeedbackTable {
             'emp_id'                    => $fback->emp_id,
             'major_resoponsbilties'     => $fback->major_resoponsbilties,
             'extra_mile'                => $fback->extra_mile,
-            'manager_lead_comment'      => $fback->manager_lead_comment,
             'notable_accomplishments'   => $fback->notable_accomplishments,
-            'overall_fb'                => $fback->overall_fb,
         );
 
         $fback_id = (int) $fback->id;
@@ -53,16 +54,13 @@ class FeedbackTable {
             return $lastId = $this->tableGateway->getLastInsertValue();
         } else {
             //only update comments for manager
-            $data = array(
-                'manager_lead_comment' => $fback->manager_lead_comment,
-                'overall_fb'           => $fback->overall_fb,
+            $data1 = array(
+                'e_manager_comment' => $fback->e_manager_comment,
+                'n_manager_comment' => $fback->n_manager_comment,
+                'overall_fb'        => $fback->overall_fb,
             );
-            if ($this->getFeedbackId($fback_id)) {
-                $this->tableGateway->update($data, array('id' => $fback_id));
-		  return $fback_id;
-            } else {
-                throw new \Exception('Form id does not exist');
-            }
+            $this->tableGateway->update($data1, array('emp_id' => $fback_id));
+            return $fback_id;
         }
     }
 }

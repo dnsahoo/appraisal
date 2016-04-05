@@ -22,6 +22,7 @@ class AppraisalTable {
 
     public function fetchAll($where = null) {
         $resultSet = $this->tableGateway->select(function(Select $select){
+            $select->columns(array('id', 'type'));
             $select->order('id ASC');
         });
         return $resultSet;

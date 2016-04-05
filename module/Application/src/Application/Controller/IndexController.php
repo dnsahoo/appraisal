@@ -11,6 +11,8 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Db\Adapter\Adapter;
+
 use Application\Model\Employeeappraisal;
 use Application\Model\Manager;
 use Application\Model\Hierarchy;
@@ -194,10 +196,72 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('home');
         }
         $this->layout('layout/appraisal');
-        $appraisals = $this->getAppraisalTableTable()->fetchAll();
-        //echo $this->params()->fromRoute('id');
+        
+        $emp_id = $this->params()->fromRoute('id');
+        
+        $request = $this->getRequest();
+        if ($request->isPost()){
+//            print_r($request->getPost());
+            /**
+             * Update Rating Table
+             */
+            $appraisals = $this->getRatingTable()->getAppraisalRating($emp_id, $this->getDbAdapter());
+            foreach($appraisals as $i => $val){
+                $i++;
+                $r_data['id']              = $val['r_id'];
+                $r_data['comment']         = $request->getPost('comments_'.$i);;
+                $r_data['manager_ratting'] = $request->getPost('managers_rating_'.$i);
+                
+                $rting = new Rating();
+                $rting->exchangeArray($r_data);
+                $r_id = $this->getRatingTable()->save($rting);
+            }
+            /**
+             * Update feedback Table
+             * 
+             * Here I use emp_id as Id of feedback table, bcuz, to avoid extra function.
+             */
+            $f_data['id'] = $emp_id;
+            $f_data['e_manager_comment'] = $request->getPost('extra_mile_comments');
+            $f_data['n_manager_comment'] = $request->getPost('notable_accom_comments');
+            $f_data['overall_fb'] = $request->getPost('overall_feedback');
+            
+            $fback = new Feedback();
+            $fback->exchangeArray($f_data);
+            $f_id = $this->getFeedBackTable()->save($fback);
+            
+            /**
+             * Update completed in Employee appraisal
+             */
+            $e_data['id']   = $emp_id;
+            $e_data['complete']   = '1';
+            $emp = new Employeeappraisal();
+            
+            $emp->exchangeArray($e_data);
+            
+            $emp_id = $this->getEmpAprslTable()->save($emp);
+            
+            
+            $this->flashMessenger()->setNamespace('success')
+                                           ->addMessage("Review has saved successfully.");
+            return $this->redirect()->toRoute('review', array('id'=>$emp_id)); 
+            
+        }//end of if (post)
+        
+        $emp_details = $this->getEmpAprslTable()->getEmpById($emp_id);
+        
+        $mngr_email = $this->getSessionStorage()->getUserData('email');
+        
+        $feedBack = $this->getFeedBackTable()->getFeedbackId('', $emp_id);
+        
+        $appraisals = $this->getRatingTable()->getAppraisalRating($emp_id, $this->getDbAdapter());
+        
+        $this->layout()->setVariable('feedBack', $feedBack);
+        $this->layout()->setVariable('emp_details', $emp_details);
+        $this->layout()->setVariable('mngr_email', $mngr_email);
         $this->layout()->setVariable('role', 1);
-        $this->layout()->setVariable('action', 'review');
+        $this->layout()->setVariable('action', 'review/'.$emp_id);
         $this->layout()->setVariable('appraisals', $appraisals);
+        
     }
 }
