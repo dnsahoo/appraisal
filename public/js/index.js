@@ -17,14 +17,27 @@ $(document).ready(function () {
                     }
                 }
             },
+			email: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please supply your email address'
+                    },
+                    emailAddress: {
+                        message: 'Please supply a valid email address'
+                    }
+                }
+            },
             globallogic_eid: {
                 validators: {
-                    number: true,
-                    number: {
-                        message: 'Please give valid employee id'
-                    },
                     notEmpty: {
                         message: 'Please give your Employee ID'
+                    },
+					numeric: {
+                        message: 'Please give valid employee id',
+                        transformer: function($field, validatorName, validator) {
+                            var value = $field.val();
+                            return value.replace(',', '');
+                        }
                     }
                 }
             },
@@ -50,10 +63,13 @@ $(document).ready(function () {
                     }
                 }
             },
-            supervisor_or_manager_name: {
+            supervisor_or_manager_email: {
                 validators: {
                     notEmpty: {
-                        message: 'Please give your Supervisor / Manager Email'
+                        message: 'Please supply your manager email address'
+                    },
+                    emailAddress: {
+                        message: 'Please supply a valid email address'
                     }
                 }
             },
@@ -64,117 +80,283 @@ $(document).ready(function () {
                     }
                 }
             },
-            self_rating: {
+            self_rating_1: {
                 validators: {
-                    notEmpty: {
-                        message: 'Please give your Self Rating'
-                    },
-                    min: 0,
-                    max: 5
+                   lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
+                    }
+                    
                 }
             },
-            key_pointers: {
+            key_pointers_1: {
                 validators: {
                     notEmpty: {
                         message: 'Please give your Key Pointers'
                     }
                 }
             },
-            self_rating1: {
+            self_rating_2: {
                 validators: {
-                    notEmpty: {
-                        message: 'Please give your Self Rating'
+                   lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
                     }
                 }
             },
-            key_pointers1: {
+            key_pointers_2: {
                 validators: {
                     notEmpty: {
                         message: 'Please give your Key Pointers'
                     }
                 }
             },
-            self_rating2: {
+            self_rating_3: {
                 validators: {
-                    notEmpty: {
-                        message: 'Please give your Self Rating'
+                   lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
                     }
                 }
             },
-            key_pointers2: {
+            key_pointers_3: {
                 validators: {
                     notEmpty: {
                         message: 'Please give your Key Pointers'
                     }
                 }
             },
-            self_rating3: {
+            self_rating_4: {
                 validators: {
-                    notEmpty: {
-                        message: 'Please give your Self Rating'
+                   lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
                     }
                 }
             },
-            key_pointers3: {
+            key_pointers_4: {
                 validators: {
                     notEmpty: {
                         message: 'Please give your Key Pointers'
                     }
                 }
             },
-            self_rating4: {
+            self_rating_5: {
                 validators: {
-                    notEmpty: {
-                        message: 'Please give your Self Rating'
+                   lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
                     }
                 }
             },
-            key_pointers4: {
+            key_pointers_5: {
                 validators: {
                     notEmpty: {
                         message: 'Please give your Key Pointers'
                     }
                 }
             },
-            self_rating5: {
+            self_rating_6: {
                 validators: {
-                    notEmpty: {
-                        message: 'Please give your Self Rating'
+                  lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
                     }
                 }
             },
-            key_pointers5: {
+            key_pointers_6: {
                 validators: {
                     notEmpty: {
                         message: 'Please give your Key Pointers'
                     }
                 }
             },
-            self_rating6: {
+            self_rating_7: {
                 validators: {
-                    notEmpty: {
-                        message: 'Please give your Self Rating'
+                   lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
                     }
                 }
             },
-            key_pointers6: {
+            key_pointers_7: {
                 validators: {
                     notEmpty: {
                         message: 'Please give your Key Pointers'
                     }
                 }
             },
-            self_rating7: {
+            self_rating_8: {
                 validators: {
-                    notEmpty: {
-                        message: 'Please give your Self Rating'
+                  lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
                     }
                 }
             },
-            key_pointers7: {
+            key_pointers_8: {
                 validators: {
                     notEmpty: {
                         message: 'Please give your Key Pointers'
+                    }
+                }
+            },
+			self_rating_9: {
+                validators: {
+                   lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
+                    }
+                }
+            },
+            key_pointers_9: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please give your Key Pointers'
+                    }
+                }
+            },
+			
+			managers_rating_1: {
+                validators: {
+                   lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
+                    }
+                }
+            },
+            comments_1: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please give your comments'
+                    }
+                }
+            },
+			
+			managers_rating_2: {
+                validators: {
+                    lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
+                    }
+                }
+            },
+            comments_2: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please give your comments'
+                    }
+                }
+            },
+			
+			managers_rating_3: {
+                validators: {
+                   lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
+                    }
+                }
+            },
+            comments_3: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please give your comments'
+                    }
+                }
+            },
+			
+			managers_rating_4: {
+                validators: {
+                   lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
+                    }
+                }
+            },
+            comments_4: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please give your comments'
+                    }
+                }
+            },
+			
+			managers_rating_5: {
+                validators: {
+                  lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
+                    }
+                }
+            },
+            comments_5: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please give your comments'
+                    }
+                }
+            },
+			
+			managers_rating_6: {
+                validators: {
+                  lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
+                    }
+                }
+            },
+            comments_6: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please give your comments'
+                    }
+                }
+            },
+			
+			managers_rating_7: {
+                validators: {
+                   lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
+                    }
+                }
+            },
+            comments_7: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please give your comments'
+                    }
+                }
+            },
+			
+			managers_rating_8: {
+                validators: {
+                   lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
+                    }
+                }
+            },
+            comments_8: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please give your comments'
+                    }
+                }
+            },
+			
+			managers_rating_9: {
+                validators: {
+                  lessThan: {
+                        value: 1,
+                        message: 'Please rate between 1 to 5'
+                    }
+                }
+            },
+            comments_9: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please give your comments'
                     }
                 }
             },

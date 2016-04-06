@@ -37,7 +37,7 @@ class RatingTable {
         //$resultSet->buffer();
         return $resultSet;
     }
-    public function save(Rating $rtng) {
+    public function save(Rating $rtng, $role = 0) {
         $data = array(
             'emp_id'        => $rtng->emp_id,
             'aprsl_id'      => $rtng->aprsl_id,
@@ -49,11 +49,20 @@ class RatingTable {
             $this->tableGateway->insert($data);
             return $lastId = $this->tableGateway->getLastInsertValue();
         } else {
+            //only update comments for reporting manager
+            if($role == 2){
+                $data = array(
+                    'reporting_rating'  => $rtng->reporting_rating,
+                    'reporting_comment'  => $rtng->reporting_comment,
+                );
+            }
             //only update comments for manager
-            $data = array(
-                'comment'  => $rtng->comment,
-                'manager_ratting'  => $rtng->manager_ratting,
-            );
+            if($role == 1){
+                $data = array(
+                    'comment'  => $rtng->comment,
+                    'manager_ratting'  => $rtng->manager_ratting,
+                );
+            }
             if ($this->getRating($rtng_id)) {
                 $this->tableGateway->update($data, array('id' => $rtng_id));
 		  return $rtng_id;

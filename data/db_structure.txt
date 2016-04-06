@@ -34,8 +34,9 @@ rating
 	aprsl_id
 	aprsl_val
 	comment
+        manager_ratting
 	key_pointers
-        self_manager
+        	
 	
 feedback
 	id

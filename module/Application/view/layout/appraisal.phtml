@@ -297,8 +297,12 @@ if($role == 1){
 <div class="form-group">
   <label class="col-md-4 control-label"></label>
   <div class="col-md-4">
-    <button type="submit" class="btn btn-warning" >Submit <span class="glyphicon glyphicon-send"></span></button>
-    <button type="button" class="btn btn-warning" ><a href="/dashboard">Back </a><span class="glyphicon glyphicon-send"></span></button>
+    <button type="submit" class="btn btn-primary" >Submit <span class="glyphicon glyphicon-send"></span></button>
+    <?php
+if($role > 0){
+?>
+    <button type="button" class="btn btn-primary" ><a href="/dashboard">Back </a><span class="glyphicon glyphicon-send"></span></button>
+<?php } ?>
   </div>
 </div>
 

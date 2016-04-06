@@ -16,6 +16,8 @@ class Rating {
     public $comment;
     public $key_pointers;
     public $manager_ratting;
+    public $reporting_rating;
+    public $reporting_comment;
     protected $inputFilter;
 
     // Add content to this method:\
@@ -27,6 +29,8 @@ class Rating {
         $this->comment = (isset($data['comment'])) ? $data['comment'] : null;
         $this->key_pointers = (isset($data['key_pointers'])) ? $data['key_pointers'] : null;
         $this->manager_ratting = (isset($data['manager_ratting'])) ? $data['manager_ratting'] : null;
+        $this->reporting_rating = (isset($data['reporting_rating'])) ? $data['reporting_rating'] : null;
+        $this->reporting_comment = (isset($data['reporting_comment'])) ? $data['reporting_comment'] : null;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {

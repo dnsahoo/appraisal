@@ -42,6 +42,16 @@ return array(
                     ),
                 ),
             ),
+            'changepswd' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/changepswd',
+                    'defaults' => array(
+                    'controller' => 'Application\Controller\Login',
+                        'action'     => 'changepswd',
+                    ),
+                ),
+            ),
             'dashboard' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(

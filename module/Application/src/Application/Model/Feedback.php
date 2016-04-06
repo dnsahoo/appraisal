@@ -17,6 +17,8 @@ class Feedback {
     public $notable_accomplishments;
     public $n_manager_comment;
     public $overall_fb;
+    public $e_rpt_manager_comment;
+    public $n_rpt_manager_comment;
     protected $inputFilter;
 
     // Add content to this method:\
@@ -29,6 +31,8 @@ class Feedback {
         $this->notable_accomplishments = (isset($data['notable_accomplishments'])) ? $data['notable_accomplishments'] : null;
         $this->n_manager_comment = (isset($data['n_manager_comment'])) ? $data['n_manager_comment'] : null;
         $this->overall_fb = (isset($data['overall_fb'])) ? $data['overall_fb'] : null;
+        $this->e_rpt_manager_comment = (isset($data['e_rpt_manager_comment'])) ? $data['e_rpt_manager_comment'] : null;
+        $this->n_rpt_manager_comment = (isset($data['n_rpt_manager_comment'])) ? $data['n_rpt_manager_comment'] : null;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {

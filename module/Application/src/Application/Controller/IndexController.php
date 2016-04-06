@@ -103,6 +103,11 @@ class IndexController extends AbstractActionController
     }
     public function appraisalAction()
     {
+        //if already login, redirect to Dashboard 
+	if (!$this->getAuthService()->hasIdentity()){
+            return $this->redirect()->toRoute('home');
+        }
+        
         $this->layout('layout/appraisal');
         $appraisals = $this->getAppraisalTableTable()->fetchAll();
         $request = $this->getRequest();
@@ -171,6 +176,11 @@ class IndexController extends AbstractActionController
             $fback = new Feedback();
             $fback->exchangeArray($f_data);
             $f_id = $this->getFeedBackTable()->save($fback);
+            
+            /**
+             * Send email to Reporting Manger and Manager
+             */
+            //email code will be here
             $this->flashMessenger()->setNamespace('success')
                                            ->addMessage("You have succcessfuly submited your appraisal form.");
             return $this->redirect()->toRoute('appraisal'); 
@@ -198,10 +208,10 @@ class IndexController extends AbstractActionController
         $this->layout('layout/appraisal');
         
         $emp_id = $this->params()->fromRoute('id');
+        $role = $this->getSessionStorage()->getUserData('role');
         
         $request = $this->getRequest();
         if ($request->isPost()){
-//            print_r($request->getPost());
             /**
              * Update Rating Table
              */
@@ -209,9 +219,16 @@ class IndexController extends AbstractActionController
             foreach($appraisals as $i => $val){
                 $i++;
                 $r_data['id']              = $val['r_id'];
-                $r_data['comment']         = $request->getPost('comments_'.$i);;
-                $r_data['manager_ratting'] = $request->getPost('managers_rating_'.$i);
-                
+                //For Manager
+                if($role == 1){
+                    $r_data['comment']         = $request->getPost('comments_'.$i);;
+                    $r_data['manager_ratting'] = $request->getPost('managers_rating_'.$i);
+                }
+                //For Reporting Manager
+                if($role == 2){
+                    $r_data['reporting_comment'] = $request->getPost('comments_'.$i);;
+                    $r_data['reporting_rating']  = $request->getPost('managers_rating_'.$i);
+                }
                 $rting = new Rating();
                 $rting->exchangeArray($r_data);
                 $r_id = $this->getRatingTable()->save($rting);
@@ -222,10 +239,17 @@ class IndexController extends AbstractActionController
              * Here I use emp_id as Id of feedback table, bcuz, to avoid extra function.
              */
             $f_data['id'] = $emp_id;
-            $f_data['e_manager_comment'] = $request->getPost('extra_mile_comments');
-            $f_data['n_manager_comment'] = $request->getPost('notable_accom_comments');
-            $f_data['overall_fb'] = $request->getPost('overall_feedback');
-            
+            //For Manager
+            if($role == 1){
+                $f_data['e_manager_comment'] = $request->getPost('extra_mile_comments');
+                $f_data['n_manager_comment'] = $request->getPost('notable_accom_comments');
+                $f_data['overall_fb'] = $request->getPost('overall_feedback');
+            }
+            //for Reporting manager
+            if($role == 2){
+                $f_data['e_rpt_manager_comment'] = $request->getPost('e_rpt_manager_comment');
+                $f_data['n_rpt_manager_comment'] = $request->getPost('n_rpt_manager_comment');
+            }
             $fback = new Feedback();
             $fback->exchangeArray($f_data);
             $f_id = $this->getFeedBackTable()->save($fback);
@@ -234,16 +258,25 @@ class IndexController extends AbstractActionController
              * Update completed in Employee appraisal
              */
             $e_data['id']   = $emp_id;
-            $e_data['complete']   = '1';
+            if($role == 1){
+                $e_data['complete']   = '1';
+            }else if($role == 2){
+                $e_data['complete']   = '2';
+            }else{
+                //nothing
+            }
             $emp = new Employeeappraisal();
-            
             $emp->exchangeArray($e_data);
-            
             $emp_id = $this->getEmpAprslTable()->save($emp);
+            
+            /**
+             * Send email to manager and Reporting manager
+             */
+            
             
             
             $this->flashMessenger()->setNamespace('success')
-                                           ->addMessage("Review has saved successfully.");
+                                           ->addMessage("Review has been saved successfully.");
             return $this->redirect()->toRoute('review', array('id'=>$emp_id)); 
             
         }//end of if (post)

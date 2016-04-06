@@ -71,13 +71,13 @@ class Module
                     //that password hashed with sha1
                     $dbAdapter           = $sm->get('Zend\Db\Adapter\Adapter');
                     $dbTableAuthAdapter  = new DbTable($dbAdapter,
-                                              'manager','email','pwd', 'MD5(?)');
+                                              'employeeappraisal','email','pswd', 'MD5(?)');
                     $authService = new AuthenticationService();
                     $authService->setAdapter($dbTableAuthAdapter);
 
                     return $authService;
                 },
-		        'Application\Model\AuthStorage' => function($sm) {
+		'Application\Model\AuthStorage' => function($sm) {
                     return new \Application\Model\AuthStorage('manager');
                 }, 
                 'Application\Model\ManagerTable' => function($sm) {

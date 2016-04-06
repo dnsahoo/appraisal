@@ -84,4 +84,13 @@ class EmployeeappraisalTable {
             return $emp_id;
         }
     }
+    
+    public function updatePswd(Employeeappraisal $emp) {
+        $data = array(
+            'pswd' => $emp->pswd,
+        );
+        $emp_id = (int) $emp->id;
+        $this->tableGateway->update($data, array('id' => $emp_id));
+        return $emp_id;
+    }
 }

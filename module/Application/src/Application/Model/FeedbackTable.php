@@ -40,7 +40,7 @@ class FeedbackTable {
         return $row;
     }
     
-    public function save(Feedback $fback) {
+    public function save(Feedback $fback, $role = 0) {
         $data = array(
             'emp_id'                    => $fback->emp_id,
             'major_resoponsbilties'     => $fback->major_resoponsbilties,
@@ -53,13 +53,22 @@ class FeedbackTable {
             $this->tableGateway->insert($data);
             return $lastId = $this->tableGateway->getLastInsertValue();
         } else {
+            //only update comments for reporting manager
+            if($role == 2){
+                $data = array(
+                    'e_rpt_manager_comment' => $fback->e_rpt_manager_comment,
+                    'n_rpt_manager_comment' => $fback->n_rpt_manager_comment,
+                );
+            }
             //only update comments for manager
-            $data1 = array(
-                'e_manager_comment' => $fback->e_manager_comment,
-                'n_manager_comment' => $fback->n_manager_comment,
-                'overall_fb'        => $fback->overall_fb,
-            );
-            $this->tableGateway->update($data1, array('emp_id' => $fback_id));
+            if($role == 1){
+                $data = array(
+                    'e_manager_comment' => $fback->e_manager_comment,
+                    'n_manager_comment' => $fback->n_manager_comment,
+                    'overall_fb'        => $fback->overall_fb,
+                );
+            }
+            $this->tableGateway->update($data, array('emp_id' => $fback_id));
             return $fback_id;
         }
     }
