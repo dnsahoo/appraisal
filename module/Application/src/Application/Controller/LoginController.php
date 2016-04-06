@@ -93,6 +93,7 @@ class LoginController extends AbstractActionController
                     if($userData->change_pswd == '0'){
                         //update pwd
                         $data['id'] = $userData->id;
+                        $data['change_pswd'] = '1';
                         $data['pswd'] = md5($request->getPost('password'));
                         
                         $emp = new Employeeappraisal();
@@ -101,6 +102,9 @@ class LoginController extends AbstractActionController
                         
                         $this->flashMessenger()->setNamespace('success')
                                            ->addMessage("Your password has been changed.");
+                        $this->getSessionStorage()->forgetMe();
+                        $this->getAuthService()->clearIdentity();
+                        return $this->redirect()->toRoute('login'); 
                     }else{
                         $this->flashMessenger()->setNamespace('error')
                                            ->addMessage("You have already changed your password. Please contact admin.");

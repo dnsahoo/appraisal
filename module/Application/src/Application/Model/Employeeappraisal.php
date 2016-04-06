@@ -18,6 +18,8 @@ class Employeeappraisal {
     public $doj;
     public $period;
     public $complete;
+    public $pswd;
+    public $change_pswd;
     protected $inputFilter;
 
     // Add content to this method:\
@@ -31,6 +33,8 @@ class Employeeappraisal {
         $this->doj = (isset($data['doj'])) ? $data['doj'] : null;
         $this->period = (isset($data['period'])) ? $data['period'] : null;
         $this->complete = (isset($data['complete'])) ? $data['complete'] : '0'; //0 for not completed
+        $this->pswd = (isset($data['pswd'])) ? $data['pswd'] : null; 
+        $this->change_pswd = (isset($data['change_pswd'])) ? $data['change_pswd'] : '0'; 
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {

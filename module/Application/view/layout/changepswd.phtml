@@ -23,6 +23,11 @@
                                 ->setMessageOpenFormat('<div%s><p>')
                                 ->setMessageSeparatorString('</p><p>')
                                 ->setMessageCloseString('</p></div>')
+                                ->render('success');
+                        echo $this->flashMessenger()
+                                ->setMessageOpenFormat('<div%s><p>')
+                                ->setMessageSeparatorString('</p><p>')
+                                ->setMessageCloseString('</p></div>')
                                 ->render('error');
                        ?>
                         <form class="form-inline" role="form" method="post" id="login" action="/changepswd">
