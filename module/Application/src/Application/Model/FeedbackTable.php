@@ -68,7 +68,7 @@ class FeedbackTable {
                     'overall_fb'        => $fback->overall_fb,
                 );
             }
-            $this->tableGateway->update($data, array('emp_id' => $fback_id));
+            $this->tableGateway->update($data, array('id' => $fback_id));
             return $fback_id;
         }
     }

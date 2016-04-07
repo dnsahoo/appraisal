@@ -48,6 +48,12 @@
 <form class="well form-horizontal" action="<?php echo '/'.$action; ?>" method="post"  id="contact_form">
 <fieldset>
 <?php
+$disable_db = false;
+$disableTag = false;
+if($role > 0){
+    $disableTag = true;
+}
+
                         echo $this->flashMessenger()
                                 ->setMessageOpenFormat('<div%s><p>')
                                 ->setMessageSeparatorString('</p><p>')
@@ -55,7 +61,8 @@
                                 ->render('success', array('alert', 'alert-success'));
                        ?>
 <!-- Form Name -->
-<legend>GlobalLogic Self Appraisal form for the period 2015-16 <span style="float: right;"><?php
+<legend>GlobalLogic Self Appraisal form for the period 2015-16 <span style="float: right;">
+    <?php
     if($role == 0){
     ?>
         <a href="/logout">Logout</a>
@@ -163,7 +170,7 @@
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="major_responsibilities" placeholder="Major Responsibilities / KRA's" class="form-control"  cols='20' rows='5' <?php echo isset($feedBack->major_resoponsbilties)?'disabled':''; ?>><?php echo isset($feedBack->major_resoponsbilties)?$feedBack->major_resoponsbilties:''; ?></textarea>
+  <textarea name="major_responsibilities" placeholder="Major Responsibilities / KRA's" class="form-control"  cols='20' rows='5' <?php echo $disableTag?'disabled':''; ?>><?php echo isset($feedBack->major_resoponsbilties)?$feedBack->major_resoponsbilties:''; ?></textarea>
     </div>
   </div>
 </div>
@@ -185,15 +192,7 @@
 <input type="hidden" name="period" value="2015-16" />
 <!-- dns changes start-->
 <?php
-$btnDisable = false;
-$keyPointDisable = false;
 foreach($appraisals as $ky => $val){
-    if(is_array($val)){
-        if(isset($val['aprsl_rate_id']) && $val['aprsl_rate_id'] != '')
-            $btnDisable = true;
-        if(isset($val['key_pointers']) && $val['key_pointers'] != '')
-            $keyPointDisable = true;
-    }
 ?>
 <!-- Text input-->
 
@@ -203,8 +202,8 @@ foreach($appraisals as $ky => $val){
     <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
     <div>
         <input name="self_rating_label_<?php echo is_array($val)?$val['id']:$val->id; ?>" type="hidden" value="<?php echo is_array($val)?$val['id']:$val->id; ?>">
-        <input id="ex<?php echo is_array($val)?$val['id']:$val->id; ?>" name="self_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" data-slider-id='ex<?php echo is_array($val)?$val['id']:$val->id; ?>Slider' type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1" data-slider-value="<?php echo is_array($val)?$val['aprsl_rate_id']:'';?>" <?php echo $btnDisable?'disabled':'';?> required/>
-        <output name="self_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></output>
+        <input id="ex<?php echo is_array($val)?$val['id']:$val->id; ?>" name="self_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" data-slider-id='ex<?php echo is_array($val)?$val['id']:$val->id; ?>Slider' type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1"  data-slider-value="<?php echo is_array($val)?$val['aprsl_rate_id']:'';?>" data-slider-enabled="<?php echo $disableTag?'false':'true';?>" required/>
+        <span id="self_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></span>
     </div>
   </div>
 </div>
@@ -216,12 +215,41 @@ foreach($appraisals as $ky => $val){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="key_pointers_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Key Pointers" class="form-control"  cols='20' rows='5' <?php echo $keyPointDisable?'disabled':'';?>><?php echo is_array($val)?$val['key_pointers']:'';?></textarea>
+  <textarea name="key_pointers_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Key Pointers" class="form-control"  cols='20' rows='5' <?php echo $disableTag?'disabled':'';?>><?php echo is_array($val)?$val['key_pointers']:'';?></textarea>
     </div>
   </div>
 </div>
+ <?php
+ //for reporting manager
+    if($role == 2){
+    ?>
+    <!-- Text input-->
 
+    <div class="form-group">
+       <legend>Reporting Manager Review</legend>
+      <label class="col-md-4 control-label" >Manager's Rating</label> 
+        <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
+            <div>
+	    <input id="rpt_managers<?php echo is_array($val)?$val['id']:$val->id; ?>" name="reporting_managers_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" data-slider-id='rpt_managers<?php echo is_array($val)?$val['id']:$val->id; ?>Slider' type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1" data-slider-value="<?php echo is_array($val)?$val['reporting_rating']:'';?>"  required/>    
+        <output name="managers_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></output>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text input-->
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" >Comments</label> 
+        <div class="col-md-4 inputGroupContainer">
+        <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+      <textarea name="reporting_managers_comments_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Comments" class="form-control"  cols='20' rows='5'><?php echo is_array($val)?$val['reporting_comment']:'';?> </textarea>
+        </div>
+      </div>
+    </div>
+    <?php } ?>
     <?php
+    //for manager
     if($role == 1){
     ?>
     <!-- Text input-->
@@ -231,8 +259,8 @@ foreach($appraisals as $ky => $val){
       <label class="col-md-4 control-label" >Manager's Rating</label> 
         <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
             <div>
-        <input name="managers_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" type="range" min="0" max="5" data-rangeSlider value="<?php echo is_array($val)?$val['manager_ratting']:'';?>" />
-            <output name="managers_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></output>
+	    <input id="managers<?php echo is_array($val)?$val['id']:$val->id; ?>" name="managers_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" data-slider-id='managers<?php echo is_array($val)?$val['id']:$val->id; ?>Slider' type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1" data-slider-value="<?php echo is_array($val)?$val['aprsl_rate_id']:'';?>"  required/>    
+        <output name="managers_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></output>
         </div>
       </div>
     </div>
@@ -262,11 +290,25 @@ foreach($appraisals as $ky => $val){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="extra_mile" placeholder="Extra-mile(optional)" class="form-control"  cols='20' rows='5' <?php echo isset($feedBack->extra_mile)?'disabled':''; ?>><?php echo isset($feedBack->extra_mile)?$feedBack->extra_mile:''; ?></textarea>
+  <textarea name="extra_mile" placeholder="Extra-mile(optional)" class="form-control"  cols='20' rows='5' <?php echo $disableTag?'disabled':''; ?>><?php echo isset($feedBack->extra_mile)?$feedBack->extra_mile:''; ?></textarea>
     </div>
   </div>
 </div>
+<?php
+if($role == 2){
+?>
+<!-- Text input-->
 
+<div class="form-group">
+  <label class="col-md-4 control-label" >Reporting Manager Comments</label> 
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+  <textarea name="e_rpt_manager_comment" placeholder="Manager/Lead Comments" class="form-control"  cols='20' rows='5'><?php echo isset($feedBack->e_rpt_manager_comment)?$feedBack->e_rpt_manager_comment:''; ?></textarea>
+    </div>
+  </div>
+</div>
+<?php } ?>
 <?php
 if($role == 1){
 ?>
@@ -282,16 +324,32 @@ if($role == 1){
   </div>
 </div>
 <?php } ?>
+
 <hr>
 <div class="form-group">
   <label class="col-md-4 control-label" >Notable Accomplishments</label> 
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="notable_accomplishments" placeholder="Notable Accomplishments" class="form-control"  cols='20' rows='5' <?php echo isset($feedBack->notable_accomplishments)?'disabled':''; ?>><?php echo isset($feedBack->notable_accomplishments)?$feedBack->notable_accomplishments:''; ?></textarea>
+  <textarea name="notable_accomplishments" placeholder="Notable Accomplishments" class="form-control"  cols='20' rows='5' <?php echo $disableTag?'disabled':''; ?>><?php echo isset($feedBack->notable_accomplishments)?$feedBack->notable_accomplishments:''; ?></textarea>
     </div>
   </div>
 </div>
+<?php
+if($role == 2){
+?>
+<!-- Text input-->
+
+<div class="form-group">
+  <label class="col-md-4 control-label" >Reporting Manager Comments</label> 
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+  <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+  <textarea name="n_rpt_manager_comment" placeholder="Manager/Lead Comments" class="form-control"  cols='20' rows='5'><?php echo isset($feedBack->n_rpt_manager_comment)?$feedBack->n_rpt_manager_comment:''; ?></textarea>
+    </div>
+  </div>
+</div>
+<?php } ?>
 <?php
 if($role == 1){
 ?>
@@ -322,11 +380,11 @@ if($role == 1){
 <div class="form-group">
   <label class="col-md-4 control-label"></label>
   <div class="col-md-4">
-    <button type="submit" class="btn btn-primary" <?php echo $btnDisable?'disabled':'';?>>Submit <span class="glyphicon glyphicon-send"></span></button>
+    <button type="submit" class="btn btn-primary" <?php echo $disable_db?'disabled':'';?>>Submit <span class="glyphicon glyphicon-send"></span></button>
     <?php
 if($role > 0){
 ?>
-    <button type="button" class="btn btn-primary" ><a href="/dashboard">Back </a><span class="glyphicon glyphicon-send"></span></button>
+    <a class="btn btn-primary" href="/dashboard">Back </a>
 <?php } ?>
   </div>
 </div>
@@ -344,12 +402,29 @@ if($role > 0){
 <script>
 for(var i=1;i<=9;i++) {
 	$('#ex'+i).slider({
+            formatter: function(value) {
+                    return 'Rating: ' + value;
+            }
+        });
+}
+for(var m=1;m<=9;m++) {
+	$('#managers'+m).slider({
 	formatter: function(value) {
 		return 'Rating: ' + value;
 		
 	}
 });
 }
+for(var m=1;m<=9;m++) {
+	$('#rpt_managers'+m).slider({
+	formatter: function(value) {
+		return 'Rating: ' + value;
+		
+	}
+});
+}
+
+
 </script>
 
     

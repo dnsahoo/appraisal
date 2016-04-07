@@ -32,7 +32,6 @@ class RatingTable {
     public function fetchAll($where = null) {
         $resultSet = $this->tableGateway->select(function (Select $select) use ($where) {
             $select->where($where);
-           
         });
         //$resultSet->buffer();
         return $resultSet;
@@ -77,7 +76,7 @@ class RatingTable {
     public function getAppraisalRating($emp_id, $dbAdapter = NULL) {
         $sql = new Sql($dbAdapter);
         $select = $sql->select();
-        $select->columns(array('r_id' => 'id','aprsl_rate_id','comment', 'manager_ratting', 'key_pointers'));
+        $select->columns(array('r_id' => 'id','aprsl_rate_id','comment', 'manager_ratting', 'key_pointers', 'reporting_rating', 'reporting_comment'));
         $select->from(array('r' => 'rating'))
                ->join(array('a' => 'appraisal'), 'a.id = r.aprsl_id', array('id','type'), \Zend\Db\Sql\Select::JOIN_RIGHT);
                

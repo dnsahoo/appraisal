@@ -130,6 +130,8 @@ class IndexController extends AbstractActionController {
 
         $request = $this->getRequest();
         if ($request->isPost()) {
+//            \Zend\Debug\Debug::dump($request->getPost());
+//            die;
             /*
              * update data into employee appraisal table
              */
@@ -149,9 +151,17 @@ class IndexController extends AbstractActionController {
                 $r_data['aprsl_id'] = $request->getPost('self_rating_label_' . $i);
                 $r_data['key_pointers'] = $request->getPost('key_pointers_' . $i);
                 $r_data['aprsl_rate_id'] = $request->getPost('self_rating_' . $i);
+                /**
+                 * check for existing rating id
+                 * if found, update record
+                 */
+                $rating_details = $this->getRatingTable()->fetchAll(array('emp_id' => $emp_details->id, 'aprsl_id' => $request->getPost('self_rating_label_' . $i)))->current();
+                if($rating_details){
+                    $r_data['id'] = $rating_details->id;
+                }
                 $rting = new Rating();
                 $rting->exchangeArray($r_data);
-                $r_id = $this->getRatingTable()->save($rting);
+                $r_id = $this->getRatingTable()->save($rting, $role);
             }
             /*
              * save into feedback table
@@ -160,15 +170,23 @@ class IndexController extends AbstractActionController {
             $f_data['major_resoponsbilties'] = $request->getPost('major_responsibilities');
             $f_data['extra_mile'] = $request->getPost('extra_mile');
             $f_data['notable_accomplishments'] = $request->getPost('notable_accomplishments');
-
+            /**
+            * check for existing feedback id
+            * if found, update record
+            */
+            $feedBack_details = $this->getFeedBackTable()->getFeedbackId('', $emp_id);
+            if($rating_details){
+                $f_data['id'] = $feedBack_details->id;
+            }
             $fback = new Feedback();
             $fback->exchangeArray($f_data);
-            $f_id = $this->getFeedBackTable()->save($fback);
+            $f_id = $this->getFeedBackTable()->save($fback, $role);
 
             /**
              * Send email to Reporting Manger and Manager
              */
             //email code will be here
+            /*
             $manageremail1 = $emp_details->mgr1_email;
             $manageremail2 = $emp_details->mgr2_email;
 
@@ -264,7 +282,9 @@ class IndexController extends AbstractActionController {
 
                 $transport = new Mail\Transport\Smtp($options);
                 $transport->send($mail);
+                
             }
+            */
             $this->flashMessenger()->setNamespace('success')
                     ->addMessage("You have succcessfuly submited your appraisal form.");
             return $this->redirect()->toRoute('appraisal');
@@ -298,30 +318,37 @@ class IndexController extends AbstractActionController {
              */
             $appraisals = $this->getRatingTable()->getAppraisalRating($emp_id, $this->getDbAdapter());
             foreach ($appraisals as $i => $val) {
+//                echo '<pre>';
+//                print_r($request->getPost());
+//                echo '</pre>';
+//                die;
                 $i++;
                 $r_data['id'] = $val['r_id'];
                 //For Manager
                 if ($role == 1) {
                     $r_data['comment'] = $request->getPost('comments_' . $i);
-                    ;
                     $r_data['manager_ratting'] = $request->getPost('managers_rating_' . $i);
                 }
                 //For Reporting Manager
                 if ($role == 2) {
-                    $r_data['reporting_comment'] = $request->getPost('comments_' . $i);
-                    ;
-                    $r_data['reporting_rating'] = $request->getPost('managers_rating_' . $i);
+                    $r_data['reporting_comment'] = $request->getPost('reporting_managers_comments_' . $i);
+                    $r_data['reporting_rating'] = $request->getPost('reporting_managers_rating_' . $i);
+                }
+                /**
+                 * check for existing rating id
+                 * if found, update record
+                 */
+                $rating_details = $this->getRatingTable()->fetchAll(array('emp_id' => $emp_id, 'aprsl_id' => $request->getPost('self_rating_label_' . $i)))->current();
+                if($rating_details){
+                    $r_data['id'] = $rating_details->id;
                 }
                 $rting = new Rating();
                 $rting->exchangeArray($r_data);
-                $r_id = $this->getRatingTable()->save($rting);
+                $r_id = $this->getRatingTable()->save($rting, $role);
             }
             /**
              * Update feedback Table
-             * 
-             * Here I use emp_id as Id of feedback table, bcuz, to avoid extra function.
              */
-            $f_data['id'] = $emp_id;
             //For Manager
             if ($role == 1) {
                 $f_data['e_manager_comment'] = $request->getPost('extra_mile_comments');
@@ -333,9 +360,17 @@ class IndexController extends AbstractActionController {
                 $f_data['e_rpt_manager_comment'] = $request->getPost('e_rpt_manager_comment');
                 $f_data['n_rpt_manager_comment'] = $request->getPost('n_rpt_manager_comment');
             }
+            /**
+            * check for existing feedback id
+            * if found, update record
+            */
+            $feedBack_details = $this->getFeedBackTable()->getFeedbackId('', $emp_id);
+            if($rating_details){
+                $f_data['id'] = $feedBack_details->id;
+            }
             $fback = new Feedback();
             $fback->exchangeArray($f_data);
-            $f_id = $this->getFeedBackTable()->save($fback);
+            $f_id = $this->getFeedBackTable()->save($fback, $role);
 
             /**
              * Update completed in Employee appraisal
@@ -349,9 +384,7 @@ class IndexController extends AbstractActionController {
                 //nothing
             }
 
-            $emp = new Employeeappraisal();
-            $emp->exchangeArray($e_data);
-            $emp_id = $this->getEmpAprslTable()->save($emp);
+            $emp_id = $this->getEmpAprslTable()->updateEmpAprsl($e_data, $emp_id);
 
             /**
              * Send email to manager and Reporting manager
@@ -372,7 +405,7 @@ class IndexController extends AbstractActionController {
         $this->layout()->setVariable('feedBack', $feedBack);
         $this->layout()->setVariable('emp_details', $emp_details);
         $this->layout()->setVariable('mngr_email', $mngr_email);
-        $this->layout()->setVariable('role', 1);
+        $this->layout()->setVariable('role', $role);
         $this->layout()->setVariable('action', 'review/' . $emp_id);
         $this->layout()->setVariable('appraisals', $appraisals);
     }
