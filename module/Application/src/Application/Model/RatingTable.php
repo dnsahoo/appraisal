@@ -79,7 +79,7 @@ class RatingTable {
         $select = $sql->select();
         $select->columns(array('r_id' => 'id','aprsl_rate_id','comment', 'manager_ratting', 'key_pointers'));
         $select->from(array('r' => 'rating'))
-               ->join(array('a' => 'appraisal'), 'a.id = r.aprsl_id', array('id','type'), \Zend\Db\Sql\Select::JOIN_INNER);
+               ->join(array('a' => 'appraisal'), 'a.id = r.aprsl_id', array('id','type'), \Zend\Db\Sql\Select::JOIN_RIGHT);
                
         $where = new \Zend\Db\Sql\Where();
         $where->equalTo('r.emp_id', $emp_id);

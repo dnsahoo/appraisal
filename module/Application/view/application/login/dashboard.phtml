@@ -7,6 +7,7 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/datatables.css');
     <div class="container">
         <h4>Welcome <?php echo $email;?>,</h4>
         <div class="row">
+            <div class="col-md-5 col-sm-5 col-lg-5 text-left pull-left"><span class="dashboard-caption"><a href="/appraisal">Self Appraisal</a></span></div>
             <div class="col-md-5 col-sm-5 col-lg-5 text-left pull-left"><span class="dashboard-caption">Your Dashboard</span></div>
         </div>
     </div>
@@ -50,10 +51,14 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/datatables.css');
                                 <td><?php echo $this->escapeHtml($emp['doj']);?></td>
                                 <td><?php echo $this->escapeHtml($emp['period']);?></td>
                                 <td><?php 
-                                    if($emp['complete']==1)
-                                       echo 'Completed';
-                                    else
-                                       echo 'Needs Review';
+                                    switch($emp['complete']){
+                                        case 1:
+                                            echo 'Manager Reviewed and Completed';
+                                        case 2:
+                                            echo 'Reporting Manager Reviewed';
+                                        case 3:
+                                            echo 'Self Review';
+                                    }
                                 ?></td>
                             </tr>
                             <?php }

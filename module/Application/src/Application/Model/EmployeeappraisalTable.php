@@ -31,7 +31,7 @@ class EmployeeappraisalTable {
         $resultSet = $this->tableGateway->select(function (Select $select) use ($where) {
             $select->where($where);
         });
-        $resultSet->buffer();
+        $resultSet = $resultSet->current();
         return $resultSet;
     }
     
@@ -39,11 +39,11 @@ class EmployeeappraisalTable {
         $sql = new Sql($dbAdapter);
         $select = $sql->select();
         $select->columns(array('id','name','email', 'designation', 'eid','process','doj','period', 'complete'));
-        $select->from(array('e' => 'employeeappraisal'))
-               ->join(array('h' => 'hierarchy'), 'h.emp_id = e.id', array(), 'left');
+        $select->from(array('e' => 'employeeappraisal'));
                
         $where = new \Zend\Db\Sql\Where();
-        $where->equalTo('h.mngr_id', $mngr_id);
+        $where->equalTo('e.parent', $mngr_id);
+        $where->notEqualTo('e.complete', '0');
         $select->where($where);
         
         $statement = $sql->prepareStatementForSqlObject($select);
@@ -91,6 +91,10 @@ class EmployeeappraisalTable {
             'change_pswd' => $emp->change_pswd,
         );
         $emp_id = (int) $emp->id;
+        $this->tableGateway->update($data, array('id' => $emp_id));
+        return $emp_id;
+    }
+    public function updateEmpAprsl($data = array(), $emp_id) {
         $this->tableGateway->update($data, array('id' => $emp_id));
         return $emp_id;
     }

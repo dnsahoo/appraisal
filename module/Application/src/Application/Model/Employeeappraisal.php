@@ -20,6 +20,12 @@ class Employeeappraisal {
     public $complete;
     public $pswd;
     public $change_pswd;
+    public $mgr1_name;
+    public $mgr1_email;
+    public $mgr2_name;
+    public $mgr2_email;
+    public $parent;
+    public $role;
     protected $inputFilter;
 
     // Add content to this method:\
@@ -35,6 +41,12 @@ class Employeeappraisal {
         $this->complete = (isset($data['complete'])) ? $data['complete'] : '0'; //0 for not completed
         $this->pswd = (isset($data['pswd'])) ? $data['pswd'] : null; 
         $this->change_pswd = (isset($data['change_pswd'])) ? $data['change_pswd'] : '0'; 
+        $this->mgr1_name = (isset($data['mgr1_name'])) ? $data['mgr1_name'] : null; 
+        $this->mgr1_email = (isset($data['mgr1_email'])) ? $data['mgr1_email'] : null; 
+        $this->mgr2_name = (isset($data['mgr2_name'])) ? $data['mgr2_name'] : null; 
+        $this->mgr2_email = (isset($data['mgr2_email'])) ? $data['mgr2_email'] : null; 
+        $this->parent = (isset($data['parent'])) ? $data['parent'] : null; 
+        $this->role = (isset($data['role'])) ? $data['role'] : null; 
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {

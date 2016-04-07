@@ -53,7 +53,12 @@
                                 ->render('success', array('alert', 'alert-success'));
                        ?>
 <!-- Form Name -->
-<legend>GlobalLogic Self Appraisal form for the period 2015-16</legend>
+<legend>GlobalLogic Self Appraisal form for the period 2015-16 <span style="float: right;"><?php
+    if($role == 0){
+    ?>
+        <a href="/logout">Logout</a>
+    <?php } ?>
+    </span></legend>
 <p>We recommend that the Self-Appraisal be completed and submitted to your manager as per timelines.</p>				
 <!-- Text input-->
 
@@ -129,15 +134,25 @@
 <!-- Text input-->
 
 <div class="form-group">
-  <label class="col-md-4 control-label" >SuperVisor / Manager email</label> 
+  <label class="col-md-4 control-label" >Reporting Manager email</label> 
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-  <input name="supervisor_or_manager_email" placeholder="SuperVisor / Manager Email" class="form-control"  type="email" value="<?php echo isset($mngr_email)?$mngr_email:''; ?>" <?php echo isset($mngr_email)?'disabled':''; ?>/>
+  <input name="reporting_manager_email" placeholder="SuperVisor / Manager Email" class="form-control"  type="email" value="<?php echo isset($emp_details->mgr1_email)?$emp_details->mgr1_email:''; ?>" <?php echo isset($emp_details->mgr1_email)?'disabled':''; ?>/>
     </div>
   </div>
 </div>
-<hr>
+<!-- Text input-->
+
+<div class="form-group">
+  <label class="col-md-4 control-label" >Manager email</label> 
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+  <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+  <input name="manager_email" placeholder="SuperVisor / Manager Email" class="form-control"  type="email" value="<?php echo isset($emp_details->mgr2_email)?$emp_details->mgr2_email:''; ?>" <?php echo isset($emp_details->mgr2_email)?'disabled':''; ?>/>
+    </div>
+  </div>
+</div>
 
 <!-- Text input-->
 
@@ -168,7 +183,15 @@
 <input type="hidden" name="period" value="2015-16" />
 <!-- dns changes start-->
 <?php
+$btnDisable = false;
+$keyPointDisable = false;
 foreach($appraisals as $ky => $val){
+    if(is_array($val)){
+        if(isset($val['aprsl_rate_id']) && $val['aprsl_rate_id'] != '')
+            $btnDisable = true;
+        if(isset($val['key_pointers']) && $val['key_pointers'] != '')
+            $keyPointDisable = true;
+    }
 ?>
 <!-- Text input-->
 
@@ -178,7 +201,7 @@ foreach($appraisals as $ky => $val){
     <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
     <div>
         <input name="self_rating_label_<?php echo is_array($val)?$val['id']:$val->id; ?>" type="hidden" value="<?php echo is_array($val)?$val['id']:$val->id; ?>">
-        <input name="self_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" type="range" min="0" max="5" data-rangeSlider value="<?php echo is_array($val)?$val['aprsl_rate_id']:'';?>" <?php echo is_array($val)?'disabled':'';?>/>
+        <input name="self_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" type="range" min="0" max="5" data-rangeSlider value="<?php echo is_array($val)?$val['aprsl_rate_id']:'';?>" <?php echo $btnDisable?'disabled':'';?>/>
 	<output name="self_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></output>
     </div>
   </div>
@@ -191,7 +214,7 @@ foreach($appraisals as $ky => $val){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="key_pointers_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Key Pointers" class="form-control"  cols='20' rows='5' <?php echo is_array($val)?'disabled':'';?>><?php echo is_array($val)?$val['key_pointers']:'';?></textarea>
+  <textarea name="key_pointers_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Key Pointers" class="form-control"  cols='20' rows='5' <?php echo $keyPointDisable?'disabled':'';?>><?php echo is_array($val)?$val['key_pointers']:'';?></textarea>
     </div>
   </div>
 </div>
@@ -263,7 +286,7 @@ if($role == 1){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="notable_accom_comments" placeholder="Notable Accomplishments" class="form-control"  cols='20' rows='5' <?php echo isset($feedBack->notable_accomplishments)?'disabled':''; ?>><?php echo isset($feedBack->notable_accomplishments)?$feedBack->notable_accomplishments:''; ?></textarea>
+  <textarea name="notable_accomplishments" placeholder="Notable Accomplishments" class="form-control"  cols='20' rows='5' <?php echo isset($feedBack->notable_accomplishments)?'disabled':''; ?>><?php echo isset($feedBack->notable_accomplishments)?$feedBack->notable_accomplishments:''; ?></textarea>
     </div>
   </div>
 </div>
@@ -297,7 +320,7 @@ if($role == 1){
 <div class="form-group">
   <label class="col-md-4 control-label"></label>
   <div class="col-md-4">
-    <button type="submit" class="btn btn-primary" >Submit <span class="glyphicon glyphicon-send"></span></button>
+    <button type="submit" class="btn btn-primary" <?php echo $btnDisable?'disabled':'';?>>Submit <span class="glyphicon glyphicon-send"></span></button>
     <?php
 if($role > 0){
 ?>

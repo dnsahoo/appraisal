@@ -87,7 +87,7 @@ class LoginController extends AbstractActionController
                 $result = $authService->authenticate();
                 if ($result->isValid()) {
                     //echo 1;die;
-                    $user_data = $this->getManagerTable()->fetchAll(array('email' => $request->getPost('username')))->current();
+                    $user_data = $this->getEmpAprslTable()->fetchAll(array('email' => $request->getPost('username')))->current();
                     $userData = $authAdapter->getResultRowObject();
                     //check for first time user
                     if($userData->change_pswd == '0'){
@@ -101,7 +101,7 @@ class LoginController extends AbstractActionController
                         $emp_row_id = $this->getEmpAprslTable()->updatePswd($emp);
                         
                         $this->flashMessenger()->setNamespace('success')
-                                           ->addMessage("Your password has been changed.");
+                                           ->addMessage("Your password has been changed. Please login with your new credentials.");
                         $this->getSessionStorage()->forgetMe();
                         $this->getAuthService()->clearIdentity();
                         return $this->redirect()->toRoute('login'); 
@@ -153,13 +153,16 @@ class LoginController extends AbstractActionController
                 $result = $authService->authenticate();
                 
                 if ($result->isValid()) {
-                    $user_data = $this->getManagerTable()->fetchAll(array('email' => $request->getPost('username')))->current();
+                    $user_data = $this->getEmpAprslTable()->fetchAll(array('email' => $request->getPost('username')));
                     $userData = $authAdapter->getResultRowObject();
                     //check for first time user
                     if($userData->change_pswd == '0'){
                         return $this->redirect()->toRoute('changepswd');                
                     }
                     $this->getSessionStorage()->setUserData($userData);
+                    if($userData->role == '0'){
+                        return $this->redirect()->toRoute('appraisal');                
+                    }
                     return $this->redirect()->toRoute('dashboard');
                 }else{
                     $this->flashMessenger()->setNamespace('error')
@@ -179,12 +182,14 @@ class LoginController extends AbstractActionController
 	if (!$this->getAuthService()->hasIdentity()){
             return $this->redirect()->toRoute('login');
         }
+        $role = $this->getSessionStorage()->getUserData('role');
+        if ($role == 0){
+            return $this->redirect()->toRoute('logout');
+        }
         
         $mngr_id = $this->getSessionStorage()->getUserData('id');
-        $role = $this->getSessionStorage()->getUserData('role');
         $email = $this->getSessionStorage()->getUserData('email');
         $empList = $this->getEmpAprslTable()->getEmpListByManagerId($mngr_id, $this->getDbAdapter());
-        
         return new ViewModel(array(
             'empList' => $empList,
             'role' => $role,

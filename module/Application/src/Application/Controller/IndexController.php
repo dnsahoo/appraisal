@@ -46,7 +46,7 @@ class IndexController extends AbstractActionController
         }
         return $this->storage;
     }
-    public function getAppraisalTableTable() {
+    public function getAppraisalTable() {
         if (!$this->appraisalTable) {
             $sm = $this->getServiceLocator();
             $this->appraisalTable = $sm->get('Application\Model\AppraisalTable');
@@ -109,48 +109,29 @@ class IndexController extends AbstractActionController
         }
         
         $this->layout('layout/appraisal');
-        $appraisals = $this->getAppraisalTableTable()->fetchAll();
+        $email = $this->getSessionStorage()->getUserData('email');
+        $emp_details = $this->getEmpAprslTable()->fetchAll(array('email' => $email));
+        /*
+         * get list of appraisal list
+         */
+        $role = $this->getSessionStorage()->getUserData('role');
+        if($emp_details->complete == 0)
+            $appraisals = $this->getAppraisalTable()->fetchAll();
+        else
+            $appraisals = $this->getRatingTable()->getAppraisalRating($emp_details->id, $this->getDbAdapter());
+        //$appraisals = $this->getAppraisalTable()->fetchAll();
+        
         $request = $this->getRequest();
         if ($request->isPost()){
             /*
-             * save data into employee appraisal table
+             * update data into employee appraisal table
              */
-            $data['name']       = $request->getPost('name');
-            $data['email']      = $request->getPost('email');
-            $data['designation']= $request->getPost('designation');
-            $data['eid']        = $request->getPost('globallogic_eid');
-            $data['process']    = $request->getPost('process');
-            $data['doj']        = date('Y-m-d', strtotime($request->getPost('doj')));
-            $data['period']     = $request->getPost('period');
-            $data['complete']   = '0'; //for new record, its is 0
-            $emp = new Employeeappraisal();
-            
-            $emp->exchangeArray($data);
-            
-            $emp_id = $this->getEmpAprslTable()->save($emp);
-            /*
-             * save into manager table
-             * 
-             * check manager exist or not
-             */
-            $mngr_row = $this->getManagerTable()->getManagerByEmail($request->getPost('supervisor_or_manager_email'));
-            if(is_null($mngr_row)){
-                $mngr_data['email'] = $request->getPost('supervisor_or_manager_email');
-                $mngr = new Manager();
-                $mngr->exchangeArray($mngr_data);
-                $mngr_id = $this->getManagerTable()->save($mngr);
-            }else{
-                $mngr_id = $mngr_row->id;
+            $data['period'] = $request->getPost('period');
+            if($emp_details->complete == 0){
+                $data['complete'] = '3';
             }
+            $emp_id = $this->getEmpAprslTable()->updateEmpAprsl($data, $emp_details->id);
             
-            /*
-             * save into hierarchy table
-             */
-            $h_data['emp_id'] = $emp_id;
-            $h_data['mngr_id'] = $mngr_id;
-            $hierarchy = new Hierarchy();
-            $hierarchy->exchangeArray($h_data);
-            $h_id = $this->getHierarchyTable()->save($hierarchy);
             /*
              * save into rating table
              * 
@@ -186,10 +167,11 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('appraisal'); 
             
         }
-        /*
-         * get list of appraisal list
-         */
-        $this->layout()->setVariable('role', 0);
+        
+        $feedBack = $this->getFeedBackTable()->getFeedbackId('', $emp_details->id);
+        $this->layout()->setVariable('feedBack', $feedBack);
+        $this->layout()->setVariable('emp_details', $emp_details);
+        $this->layout()->setVariable('role', $role);
         $this->layout()->setVariable('action', 'appraisal');
         $this->layout()->setVariable('appraisals', $appraisals);
         
@@ -265,6 +247,7 @@ class IndexController extends AbstractActionController
             }else{
                 //nothing
             }
+            
             $emp = new Employeeappraisal();
             $emp->exchangeArray($e_data);
             $emp_id = $this->getEmpAprslTable()->save($emp);
