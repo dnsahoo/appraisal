@@ -61,6 +61,8 @@ class LoginController extends AbstractActionController
     public function changepswdAction()
     {
         $this->layout('layout/changepswd');
+        $this->getSessionStorage()->forgetMe();
+        $this->getAuthService()->clearIdentity();
         $request = $this->getRequest();
         if ($request->isPost()){
                 //check authentication...
@@ -87,7 +89,7 @@ class LoginController extends AbstractActionController
                 $result = $authService->authenticate();
                 if ($result->isValid()) {
                     //echo 1;die;
-                    $user_data = $this->getEmpAprslTable()->fetchAll(array('email' => $request->getPost('username')))->current();
+                    $user_data = $this->getEmpAprslTable()->fetchAll(array('email' => $request->getPost('username')));
                     $userData = $authAdapter->getResultRowObject();
                     //check for first time user
                     if($userData->change_pswd == '0'){
@@ -102,9 +104,8 @@ class LoginController extends AbstractActionController
                         
                         $this->flashMessenger()->setNamespace('success')
                                            ->addMessage("Your password has been changed. Please login with your new credentials.");
-                        $this->getSessionStorage()->forgetMe();
-                        $this->getAuthService()->clearIdentity();
-                        return $this->redirect()->toRoute('login'); 
+                        
+                        return $this->redirect()->toRoute('logout'); 
                     }else{
                         $this->flashMessenger()->setNamespace('error')
                                            ->addMessage("You have already changed your password. Please contact admin.");
