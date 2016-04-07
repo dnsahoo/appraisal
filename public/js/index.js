@@ -9,6 +9,10 @@ $(document).ready(function () {
         fields: {
             name: {
                 validators: {
+					regexp : {
+                        regexp : /^[a-z\s]+$/i,
+                        message : 'Name can only consist of alphabetical characters'
+                    },
                     stringLength: {
                         min: 2,
                     },
@@ -43,6 +47,10 @@ $(document).ready(function () {
             },
             designation: {
                 validators: {
+					regexp : {
+                        regexp : /^[a-z\s]+$/i,
+                        message : 'Designation can only consist of alphabetical characters'
+                    },
                     notEmpty: {
                         message: 'Please give your designation'
                     }
@@ -50,6 +58,10 @@ $(document).ready(function () {
             },
             process: {
                 validators: {
+					regexp : {
+                        regexp : /^[a-z\s]+$/i,
+                        message : 'Process can only consist of alphabetical characters'
+                    },
                     notEmpty: {
                         message: 'Please give your process'
                     }
@@ -58,8 +70,13 @@ $(document).ready(function () {
             },
             doj: {
                 validators: {
+					/*regexp : {
+                        regexp : /^\d{2}[./-]\d{2}[./-]\d{4}$/,
+                        message : 'Doj must be in dd/mm/yyyy format'
+                    },
+					*/
                     notEmpty: {
-                        message: 'Please give your Doj'
+                        message: 'Please choose your Doj'
                     }
                 }
             },
@@ -82,11 +99,9 @@ $(document).ready(function () {
             },
             self_rating_1: {
                 validators: {
-                   lessThan: {
-                        value: 1,
+				notEmpty: {
                         message: 'Please rate between 1 to 5'
                     }
-                    
                 }
             },
             key_pointers_1: {
@@ -96,7 +111,7 @@ $(document).ready(function () {
                     }
                 }
             },
-            self_rating_2: {
+             self_rating_2: {
                 validators: {
                    lessThan: {
                         value: 1,
@@ -392,4 +407,5 @@ $(document).ready(function () {
                     console.log(result);
                 }, 'json');
             });
+			
 });

@@ -8,7 +8,9 @@
 	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'>
 	<link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css'>
 	<link rel="stylesheet" href="/css/appraisal_style.css">
-    <link rel="stylesheet" href="/css/rangeSlider.css">
+        
+<link rel="stylesheet" href="/css/bootstrap-slider.min.css">
+<link rel="stylesheet" href="/css/bootstrap-slider.css">
   <style>
   legend {
    border-bottom: 1px solid #ccc !important;
@@ -201,8 +203,8 @@ foreach($appraisals as $ky => $val){
     <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
     <div>
         <input name="self_rating_label_<?php echo is_array($val)?$val['id']:$val->id; ?>" type="hidden" value="<?php echo is_array($val)?$val['id']:$val->id; ?>">
-        <input name="self_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" type="range" min="0" max="5" data-rangeSlider value="<?php echo is_array($val)?$val['aprsl_rate_id']:'';?>" <?php echo $btnDisable?'disabled':'';?>/>
-	<output name="self_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></output>
+        <input id="ex<?php echo is_array($val)?$val['id']:$val->id; ?>" name="self_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" data-slider-id='ex<?php echo is_array($val)?$val['id']:$val->id; ?>Slider' type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1" data-slider-value="<?php echo is_array($val)?$val['aprsl_rate_id']:'';?>" <?php echo $btnDisable?'disabled':'';?> required/>
+        <output name="self_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></output>
     </div>
   </div>
 </div>
@@ -337,54 +339,17 @@ if($role > 0){
 <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
 <script src="/js/index.js"></script>
-<script src="/js/rangeSlider.js"></script>
+<script src="/js/bootstrap-slider.min.js"></script>
+<script src="/js/bootstrap-slider.js"></script>
 <script>
-    (function () {
-
-        var selector = '[data-rangeSlider]',
-            elements = document.querySelectorAll(selector);
-
-        // Example functionality to demonstrate a value feedback
-        function valueOutput(element) {
-            var value = element.value,
-                output = element.parentNode.getElementsByTagName('output')[0];
-            output.innerHTML = value;
-        }
-
-        for (var i = elements.length - 1; i >= 0; i--) {
-            valueOutput(elements[i]);
-        }
-
-        Array.prototype.slice.call(document.querySelectorAll('input[type="range"]')).forEach(function (el) {
-            el.addEventListener('input', function (e) {
-                valueOutput(e.target);
-            }, false);
-        });
+for(var i=1;i<=9;i++) {
+	$('#ex'+i).slider({
+	formatter: function(value) {
+		return 'Rating: ' + value;
 		
-        // Basic rangeSlider initialization
-        rangeSlider.create(elements, {
-
-            // Callback function
-            onInit: function () {
-            },
-
-            // Callback function
-            onSlideStart: function (value, percent,  position) {
-                console.info('onSlideStart', 'value: ' + value, 'percent: ' + percent, 'position: ' + position);
-            },
-
-            // Callback function
-            onSlide: function (value, percent,  position) {
-                console.log('onSlide', 'value: ' + value, 'percent: ' + percent, 'position: ' + position);
-            },
-
-            // Callback function
-            onSlideEnd: function (value, percent,  position) {
-                console.warn('onSlideEnd', 'value: ' + value, 'percent: ' + percent, 'position: ' + position);
-            }
-        });
-
-    })();
+	}
+});
+}
 </script>
 
     

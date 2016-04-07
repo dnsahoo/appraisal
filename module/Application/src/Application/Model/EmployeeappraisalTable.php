@@ -35,20 +35,35 @@ class EmployeeappraisalTable {
         return $resultSet;
     }
     
-    public function getEmpListByManagerId($mngr_id, $dbAdapter = NULL) {
+    public function getEmpListByManagerId($mngr_id, $dbAdapter = NULL, $role = 0) {
         $sql = new Sql($dbAdapter);
         $select = $sql->select();
-        $select->columns(array('id','name','email', 'designation', 'eid','process','doj','period', 'complete'));
-        $select->from(array('e' => 'employeeappraisal'));
+//        $select->columns(array('id','name','email', 'designation', 'eid','process','doj','period', 'complete'));
+//        $select->from(array('e' => 'employeeappraisal'));
+        
+        $select->columns(array('id'));
+        $select->from(array('e1' => 'employeeappraisal'))
+               ->join(array('e2' => 'employeeappraisal'), 'e2.parent = e1.id', array('e2_id'=>'id'), \Zend\Db\Sql\Select::JOIN_LEFT)
+               ->join(array('e3' => 'employeeappraisal'), 'e3.parent = e2.id', array('e3_id'=>'id'), \Zend\Db\Sql\Select::JOIN_LEFT);
                
         $where = new \Zend\Db\Sql\Where();
-        $where->equalTo('e.parent', $mngr_id);
-        $where->notEqualTo('e.complete', '0');
+        $where->equalTo('e1.id', $mngr_id);
+        //$where->notEqualTo('e1.complete', '0');
         $select->where($where);
-        
         $statement = $sql->prepareStatementForSqlObject($select);
         $resultSet = $statement->execute();
-        return $resultSet;
+        $e2_id = array();
+        $e3_id = array();
+        foreach ($resultSet as $key => $value) {
+           $e2_id[] = $value['e2_id']; 
+           $e3_id[] = $value['e3_id']; 
+        }
+        $final_ary = array_filter(array_unique(array_merge($e2_id, $e3_id)));
+        $rs = array();
+        foreach ($final_ary as $key => $emp_id){
+            $rs[] = $this->getEmpById($emp_id);
+        }
+        return $rs;
     }
     
     public function getEmpById($id) {

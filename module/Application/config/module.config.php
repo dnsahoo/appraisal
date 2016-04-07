@@ -65,9 +65,10 @@ return array(
             'review' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route'    => '/review[/:id]',
+                    'route'    => '/review[/:id][/:p_id]',
                     'constraints' => array(
                         'id' => '[0-9]+',
+                        'p_id' => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',

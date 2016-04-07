@@ -37,27 +37,33 @@ $this->headLink()->appendStylesheet($this->basePath() . '/css/datatables.css');
                             <?php 
                             if(count($empList) > 0){
                                 $cnt = 0;
-                            foreach ($empList as $emp){ 
+                            foreach ($empList as $emp){
                                 $cnt++;
                                 ?>
-                            <tr style="<?php if($emp['complete']==1){echo "color: blue !important;";}?>">
+                            <tr style="<?php if($emp->complete==1){echo "color: blue !important;";}?>">
                                 <td><?php echo $this->escapeHtml($cnt);?></td>
                                 <td>
-                                    <a href="<?php echo $this->url('review', array('action' => 'review', 'id' => $emp['id'])); ?>"><?php echo $this->escapeHtml($emp['name']);?></a>
+                                    <a href="<?php echo $this->url('review', array('action' => 'review', 'id' => $emp->id)); ?>"><?php echo $this->escapeHtml($emp->name);?></a>
            			</td>
-                                <td><?php echo $this->escapeHtml($emp['email']);?></td>
-                                <td><?php echo $this->escapeHtml(ucfirst($emp['process']));?></td>
-                                <td><?php echo $this->escapeHtml($emp['eid']);?></td>
-                                <td><?php echo $this->escapeHtml($emp['doj']);?></td>
-                                <td><?php echo $this->escapeHtml($emp['period']);?></td>
+                                <td><?php echo $this->escapeHtml($emp->email);?></td>
+                                <td><?php echo $this->escapeHtml(ucfirst($emp->process));?></td>
+                                <td><?php echo $this->escapeHtml($emp->eid);?></td>
+                                <td><?php echo $this->escapeHtml($emp->doj);?></td>
+                                <td><?php echo $this->escapeHtml($emp->period);?></td>
                                 <td><?php 
-                                    switch($emp['complete']){
+                                    switch($emp->complete){
+                                        case 0:
+                                            echo 'Not yet submited';
+                                            break;
                                         case 1:
                                             echo 'Manager Reviewed and Completed';
+                                            break;
                                         case 2:
                                             echo 'Reporting Manager Reviewed';
+                                            break;
                                         case 3:
                                             echo 'Self Review';
+                                            break;
                                     }
                                 ?></td>
                             </tr>
