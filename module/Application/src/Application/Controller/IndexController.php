@@ -178,7 +178,7 @@ class IndexController extends AbstractActionController {
             * if found, update record
             */
             $feedBack_details = $this->getFeedBackTable()->getFeedbackId('', $emp_id);
-            if($rating_details){
+            if($feedBack_details){
                 $f_data['id'] = $feedBack_details->id;
             }
             $fback = new Feedback();

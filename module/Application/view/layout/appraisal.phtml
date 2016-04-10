@@ -53,7 +53,7 @@
 <?php
 $disable_db = false;
 $disableTag = false;
-$direct_reporting_to_mngr = ($emp_details->role == 2)?true:false;
+$direct_reporting_to_mngr = ($emp_details->role == '2')?true:false;
 if($role > 0){
     $disableTag = true;
 }
@@ -76,6 +76,9 @@ if($login_user_role > 0){
     <a class="" href="/dashboard">Back </a>
 <?php } ?>
     </span></legend>
+<?php if($emp_details->complete == 3 && $role == 1 && $direct_reporting_to_mngr != true) {?>
+<p style="color: red;">Reporting manager not yet reviewed this form.</p>	
+<?php } ?>
 <p>We recommend that the Self-Appraisal be completed and submitted to your manager as per timelines.</p>				
 <!-- Text input-->
 
@@ -388,7 +391,7 @@ if($role == 1){
 <div class="form-group">
   <label class="col-md-4 control-label"></label>
   <div class="col-md-4">
-      <span>Note: You can edit/update your appraisal form till last date. After last date you are not allowed to update it.</span>
+      <span>Note: You can edit/update this appraisal form till last date. After last date you are not allowed to update it.</span>
       <button type="button" id="submit-btn" class="btn btn-primary" <?php echo $disable_db?'disabled':'';?>>Submit <span class="glyphicon glyphicon-send"></span></button>
     <?php
 if($role > 0){
