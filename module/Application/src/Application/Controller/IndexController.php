@@ -189,7 +189,7 @@ class IndexController extends AbstractActionController {
              * Send email to Reporting Manger and Manager
              */
             //email code will be here
-            /*
+            
             $manageremail1 = $emp_details->mgr1_email;
             $manageremail2 = $emp_details->mgr2_email;
 
@@ -287,7 +287,7 @@ class IndexController extends AbstractActionController {
                 $transport->send($mail);
                 
             }
-            */
+            
             $this->flashMessenger()->setNamespace('success')
                     ->addMessage("You have succcessfuly submited your appraisal form.");
             return $this->redirect()->toRoute('appraisal');
