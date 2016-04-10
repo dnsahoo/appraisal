@@ -8,9 +8,7 @@
 	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'>
 	<link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css'>
 	<link rel="stylesheet" href="/css/appraisal_style.css">
-        
-<link rel="stylesheet" href="/css/bootstrap-slider.min.css">
-<link rel="stylesheet" href="/css/bootstrap-slider.css">
+    <link rel="stylesheet" href="/css/rangeSlider.css">
   <style>
   legend {
    border-bottom: 1px solid #ccc !important;
@@ -36,6 +34,11 @@
             -moz-box-sizing: border-box;
             box-sizing: border-box;
         }
+        .error{
+            color: red;
+            margin-bottom: 10px;
+        }
+        hr{border-top: 1px solid #521717 !important;}
   </style>  
     
     
@@ -50,6 +53,7 @@
 <?php
 $disable_db = false;
 $disableTag = false;
+$direct_reporting_to_mngr = ($emp_details->role == 2)?true:false;
 if($role > 0){
     $disableTag = true;
 }
@@ -61,12 +65,16 @@ if($role > 0){
                                 ->render('success', array('alert', 'alert-success'));
                        ?>
 <!-- Form Name -->
-<legend>GlobalLogic Self Appraisal form for the period 2015-16 <span style="float: right;">
-    <?php
-    if($role == 0){
+<legend>GlobalLogic Self Appraisal form for the period 2015-16 <?php echo ($login_user_role > 0)?' - Review':''?><span style="float: right;"><?php
+    if($login_user_role == 0){
     ?>
         <a href="/logout">Logout</a>
     <?php } ?>
+        <?php
+if($login_user_role > 0){
+?>
+    <a class="" href="/dashboard">Back </a>
+<?php } ?>
     </span></legend>
 <p>We recommend that the Self-Appraisal be completed and submitted to your manager as per timelines.</p>				
 <!-- Text input-->
@@ -202,8 +210,8 @@ foreach($appraisals as $ky => $val){
     <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
     <div>
         <input name="self_rating_label_<?php echo is_array($val)?$val['id']:$val->id; ?>" type="hidden" value="<?php echo is_array($val)?$val['id']:$val->id; ?>">
-        <input id="ex<?php echo is_array($val)?$val['id']:$val->id; ?>" name="self_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" data-slider-id='ex<?php echo is_array($val)?$val['id']:$val->id; ?>Slider' type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1"  data-slider-value="<?php echo is_array($val)?$val['aprsl_rate_id']:'';?>" data-slider-enabled="<?php echo $disableTag?'false':'true';?>" required/>
-        <span id="self_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></span>
+        <input name="self_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" type="range" min="0" max="5" data-rangeSlider value="<?php echo is_array($val)?$val['aprsl_rate_id']:'';?>" <?php echo $disableTag?'disabled':'';?>/>
+	<output name="self_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></output>
     </div>
   </div>
 </div>
@@ -221,7 +229,7 @@ foreach($appraisals as $ky => $val){
 </div>
  <?php
  //for reporting manager
-    if($role == 2){
+    if($role > 0 && !$direct_reporting_to_mngr){
     ?>
     <!-- Text input-->
 
@@ -230,9 +238,9 @@ foreach($appraisals as $ky => $val){
       <label class="col-md-4 control-label" >Manager's Rating</label> 
         <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
             <div>
-	    <input id="rpt_managers<?php echo is_array($val)?$val['id']:$val->id; ?>" name="reporting_managers_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" data-slider-id='rpt_managers<?php echo is_array($val)?$val['id']:$val->id; ?>Slider' type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1" data-slider-value="<?php echo is_array($val)?$val['reporting_rating']:'';?>"  required/>    
-        <output name="managers_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></output>
-        </div>
+                <input name="reporting_managers_rating_<?php echo is_array($val) ? $val['id'] : $val->id; ?>" type="range" min="0" max="5" data-rangeSlider value="<?php echo is_array($val) ? $val['reporting_rating'] : ''; ?>" <?php echo ($role==1)?'disabled':'';?>/>    
+                <output name="managers_rate_result_<?php echo is_array($val) ? $val['id'] : $val->id; ?>"></output>
+            </div>
       </div>
     </div>
 
@@ -243,7 +251,7 @@ foreach($appraisals as $ky => $val){
         <div class="col-md-4 inputGroupContainer">
         <div class="input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-      <textarea name="reporting_managers_comments_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Comments" class="form-control"  cols='20' rows='5'><?php echo is_array($val)?$val['reporting_comment']:'';?> </textarea>
+      <textarea name="reporting_managers_comments_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Comments" class="form-control"  cols='20' rows='5' <?php echo ($role==1)?'disabled':'';?>><?php echo is_array($val)?$val['reporting_comment']:'';?> </textarea>
         </div>
       </div>
     </div>
@@ -259,7 +267,7 @@ foreach($appraisals as $ky => $val){
       <label class="col-md-4 control-label" >Manager's Rating</label> 
         <div class="col-md-4 inputGroupContainer" style="margin-top:7px;">
             <div>
-	    <input id="managers<?php echo is_array($val)?$val['id']:$val->id; ?>" name="managers_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" data-slider-id='managers<?php echo is_array($val)?$val['id']:$val->id; ?>Slider' type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1" data-slider-value="<?php echo is_array($val)?$val['aprsl_rate_id']:'';?>"  required/>    
+	    <input name="managers_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" type="range" min="0" max="5" data-rangeSlider value="<?php echo is_array($val)?$val['manager_ratting']:'';?>" />    
         <output name="managers_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></output>
         </div>
       </div>
@@ -295,7 +303,7 @@ foreach($appraisals as $ky => $val){
   </div>
 </div>
 <?php
-if($role == 2){
+if($role > 0 && !$direct_reporting_to_mngr){
 ?>
 <!-- Text input-->
 
@@ -304,7 +312,7 @@ if($role == 2){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="e_rpt_manager_comment" placeholder="Manager/Lead Comments" class="form-control"  cols='20' rows='5'><?php echo isset($feedBack->e_rpt_manager_comment)?$feedBack->e_rpt_manager_comment:''; ?></textarea>
+  <textarea name="e_rpt_manager_comment" placeholder="Manager/Lead Comments" class="form-control"  cols='20' rows='5' <?php echo ($role==1)?'disabled':'';?>><?php echo isset($feedBack->e_rpt_manager_comment)?$feedBack->e_rpt_manager_comment:''; ?></textarea>
     </div>
   </div>
 </div>
@@ -336,7 +344,7 @@ if($role == 1){
   </div>
 </div>
 <?php
-if($role == 2){
+if($role > 0 && !$direct_reporting_to_mngr){
 ?>
 <!-- Text input-->
 
@@ -345,7 +353,7 @@ if($role == 2){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="n_rpt_manager_comment" placeholder="Manager/Lead Comments" class="form-control"  cols='20' rows='5'><?php echo isset($feedBack->n_rpt_manager_comment)?$feedBack->n_rpt_manager_comment:''; ?></textarea>
+  <textarea name="n_rpt_manager_comment" placeholder="Manager/Lead Comments" class="form-control"  cols='20' rows='5' <?php echo ($role==1)?'disabled':'';?>><?php echo isset($feedBack->n_rpt_manager_comment)?$feedBack->n_rpt_manager_comment:''; ?></textarea>
     </div>
   </div>
 </div>
@@ -380,7 +388,8 @@ if($role == 1){
 <div class="form-group">
   <label class="col-md-4 control-label"></label>
   <div class="col-md-4">
-    <button type="submit" class="btn btn-primary" <?php echo $disable_db?'disabled':'';?>>Submit <span class="glyphicon glyphicon-send"></span></button>
+      <span>Note: You can edit/update your appraisal form till last date. After last date you are not allowed to update it.</span>
+      <button type="button" id="submit-btn" class="btn btn-primary" <?php echo $disable_db?'disabled':'';?>>Submit <span class="glyphicon glyphicon-send"></span></button>
     <?php
 if($role > 0){
 ?>
@@ -397,34 +406,37 @@ if($role > 0){
 <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
 <script src="/js/index.js"></script>
-<script src="/js/bootstrap-slider.min.js"></script>
-<script src="/js/bootstrap-slider.js"></script>
+<script src="/js/rangeSlider.js"></script>
+<script src="/js/jquery.validate.js"></script>
 <script>
-for(var i=1;i<=9;i++) {
-	$('#ex'+i).slider({
-            formatter: function(value) {
-                    return 'Rating: ' + value;
+    (function () {
+
+        var selector = '[data-rangeSlider]',
+            elements = document.querySelectorAll(selector);
+
+        // Example functionality to demonstrate a value feedback
+        function valueOutput(element) {
+            var value = element.value,
+                output = element.parentNode.getElementsByTagName('output')[0];
+            output.innerHTML = value;
             }
+
+        for (var i = elements.length - 1; i >= 0; i--) {
+            valueOutput(elements[i]);
+}
+		
+        Array.prototype.slice.call(document.querySelectorAll('input[type="range"]')).forEach(function (el) {
+            el.addEventListener('input', function (e) {
+                valueOutput(e.target);
+            }, false);
+});
+		
+        // Basic rangeSlider initialization
+        rangeSlider.create(elements, {
+            // Callback function
         });
-}
-for(var m=1;m<=9;m++) {
-	$('#managers'+m).slider({
-	formatter: function(value) {
-		return 'Rating: ' + value;
-		
-	}
-});
-}
-for(var m=1;m<=9;m++) {
-	$('#rpt_managers'+m).slider({
-	formatter: function(value) {
-		return 'Rating: ' + value;
-		
-	}
-});
-}
 
-
+    })();
 </script>
 
     

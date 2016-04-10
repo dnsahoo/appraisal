@@ -108,7 +108,11 @@ class IndexController extends AbstractActionController {
     public function indexAction() {
         return new ViewModel();
     }
-
+    /**
+     * This method works for self appraisal
+     * Here $role should be 0
+     * @return type
+     */
     public function appraisalAction() {
         //if already login, redirect to Dashboard 
         if (!$this->getAuthService()->hasIdentity()) {
@@ -121,17 +125,16 @@ class IndexController extends AbstractActionController {
         /*
          * get list of appraisal list
          */
-        $role = $this->getSessionStorage()->getUserData('role');
-        if ($emp_details->complete == 0)
+        $login_user_role = $this->getSessionStorage()->getUserData('role');
+        if ($emp_details->complete == 0){
             $appraisals = $this->getAppraisalTable()->fetchAll();
-        else
+        }else{
             $appraisals = $this->getRatingTable()->getAppraisalRating($emp_details->id, $this->getDbAdapter());
-        //$appraisals = $this->getAppraisalTable()->fetchAll();
+            //$appraisals = $this->getAppraisalTable()->fetchAll();
+        }
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-//            \Zend\Debug\Debug::dump($request->getPost());
-//            die;
             /*
              * update data into employee appraisal table
              */
@@ -161,7 +164,7 @@ class IndexController extends AbstractActionController {
                 }
                 $rting = new Rating();
                 $rting->exchangeArray($r_data);
-                $r_id = $this->getRatingTable()->save($rting, $role);
+                $r_id = $this->getRatingTable()->save($rting, 0);
             }
             /*
              * save into feedback table
@@ -180,7 +183,7 @@ class IndexController extends AbstractActionController {
             }
             $fback = new Feedback();
             $fback->exchangeArray($f_data);
-            $f_id = $this->getFeedBackTable()->save($fback, $role);
+            $f_id = $this->getFeedBackTable()->save($fback, 0);
 
             /**
              * Send email to Reporting Manger and Manager
@@ -293,9 +296,10 @@ class IndexController extends AbstractActionController {
         $feedBack = $this->getFeedBackTable()->getFeedbackId('', $emp_details->id);
         $this->layout()->setVariable('feedBack', $feedBack);
         $this->layout()->setVariable('emp_details', $emp_details);
-        $this->layout()->setVariable('role', $role);
+        $this->layout()->setVariable('role', 0);//for self appraisal $role = 0
         $this->layout()->setVariable('action', 'appraisal');
         $this->layout()->setVariable('appraisals', $appraisals);
+        $this->layout()->setVariable('login_user_role', $login_user_role);
     }
 
     /**
@@ -310,7 +314,7 @@ class IndexController extends AbstractActionController {
 
         $emp_id = $this->params()->fromRoute('id');
         $role = $this->getSessionStorage()->getUserData('role');
-
+        
         $request = $this->getRequest();
         if ($request->isPost()) {
             /**
@@ -318,10 +322,6 @@ class IndexController extends AbstractActionController {
              */
             $appraisals = $this->getRatingTable()->getAppraisalRating($emp_id, $this->getDbAdapter());
             foreach ($appraisals as $i => $val) {
-//                echo '<pre>';
-//                print_r($request->getPost());
-//                echo '</pre>';
-//                die;
                 $i++;
                 $r_data['id'] = $val['r_id'];
                 //For Manager
@@ -401,11 +401,12 @@ class IndexController extends AbstractActionController {
         $feedBack = $this->getFeedBackTable()->getFeedbackId('', $emp_id);
 
         $appraisals = $this->getRatingTable()->getAppraisalRating($emp_id, $this->getDbAdapter());
-
+        
         $this->layout()->setVariable('feedBack', $feedBack);
         $this->layout()->setVariable('emp_details', $emp_details);
         $this->layout()->setVariable('mngr_email', $mngr_email);
         $this->layout()->setVariable('role', $role);
+        $this->layout()->setVariable('login_user_role', $role);
         $this->layout()->setVariable('action', 'review/' . $emp_id);
         $this->layout()->setVariable('appraisals', $appraisals);
     }
