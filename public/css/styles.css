@@ -627,7 +627,7 @@ font-size:12px;
 font-weight:bold;
 }
 .error p{padding:7px 16px;border-radius:5px;display:inline-block;background:red;color:#ffffff;margin:0px 0px 12px 300px;font-size:12px;}
-.success p{padding:7px 16px;border-radius:5px;display:inline-block;background:#4b83b2;color:#ffffff;margin:0px 0px 12px 300px;font-size:12px;}
+.success p{padding:7px 16px;border-radius:5px;display:inline-block;background:#4b83b2;color:#ffffff;font-size:12px;}
 .fa-minus{padding:0px 1px 0px 0px;}
 .fa-plus{padding:0px 1px 0px 0px;}
 .ins_module{margin:-15px 0px 0px 0px;display:block;}
