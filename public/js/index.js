@@ -4,6 +4,9 @@ setTimeout( "jQuery('.alert-error').hide();",5000 );
     
   $("#contact_form").validate({
         rules: {
+            major_responsibilities: {
+                required : true
+            },
             self_rating_1: {
                 check_rating : true
             },
@@ -33,6 +36,9 @@ setTimeout( "jQuery('.alert-error').hide();",5000 );
             }
         },
         messages: {
+            major_responsibilities: {
+                required: "Please enter your responsibilities."
+            },
             self_rating_1: {
                 check_rating: "Your rating should not be 0."
             },
