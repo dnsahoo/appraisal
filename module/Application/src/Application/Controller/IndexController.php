@@ -138,8 +138,6 @@ class IndexController extends AbstractActionController {
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            \Zend\Debug\Debug::dump($request->getPost('save_for_later'));
-            die;
             /*
              * update data into employee appraisal table
              */
