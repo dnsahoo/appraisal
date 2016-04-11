@@ -189,12 +189,12 @@ class LoginController extends AbstractActionController
         }
         
         $mngr_id = $this->getSessionStorage()->getUserData('id');
-        $email = $this->getSessionStorage()->getUserData('email');
+        $name = $this->getSessionStorage()->getUserData('name');
         $empList = $this->getEmpAprslTable()->getEmpListByManagerId($mngr_id, $this->getDbAdapter());
         return new ViewModel(array(
             'empList' => $empList,
             'role' => $role,
-            'email' => $email,
+            'name' => $name,
         ));
          
     }

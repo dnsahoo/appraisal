@@ -8,6 +8,7 @@ class AuthStorage extends Storage\Session
         $user_session = new Container('manager');
         $user_session->id = $userData->id;
         $user_session->email = $userData->email;
+        $user_session->name = $userData->name;
         $user_session->role = $userData->role;
         return;
     }
