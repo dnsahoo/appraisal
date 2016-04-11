@@ -190,9 +190,15 @@ class IndexController extends AbstractActionController {
 
             /**
              * Send email to Reporting Manger and Manager
+             * check save_for_later's value
+             * if 1, dont send email
+             * else send email
              */
             //email code will be here
+            
             /*
+            if((int)$request->getPost('save_for_later') == 1){
+             
             $manageremail1 = $emp_details->mgr1_email;
             $manageremail2 = $emp_details->mgr2_email;
 
@@ -290,6 +296,7 @@ class IndexController extends AbstractActionController {
                 $transport->send($mail);
                 
             }
+            }//end save_for_later
             */
             $this->flashMessenger()->setNamespace('success')
                     ->addMessage("You have succcessfuly submited your appraisal form.");

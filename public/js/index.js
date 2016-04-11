@@ -81,8 +81,13 @@ setTimeout( "jQuery('.alert-error').hide();",5000 );
     );
     $("#submit-btn").click(function(){
        if($("#contact_form").valid()){
+           $("#save_for_later").val('0');
            $("#contact_form").submit();
        }
+   }); 
+    $("#save_btn").click(function(){
+        $("#save_for_later").val('1');
+        $("#contact_form").submit();
    }); 
     
 });
