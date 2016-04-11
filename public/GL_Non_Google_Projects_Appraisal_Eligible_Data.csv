@@ -1,0 +1,56 @@
+Sno,EID,DOJ,Name,Role,email,password,Reporting to,Reporting_to_email,Reviewer,Reviewer_Email,Project,Parent,Role
+1,302570,9/26/2011,Ashok Babu Ravuri,Senior Analyst,Ashok.babu@globallogic.com,95844255,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+2,303735,10/1/2012,Hemalatha P,Senior Analyst,hemalatha.p@globallogic.com,95063979,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+3,305034,7/17/2013,Phani Reddy Kukunuri,Analyst,phanireddy.k@globallogic.com,95674292,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+4,305112,7/29/2013,Revathi Yedella,Analyst,revathi.y@globallogic.com,95585930,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+5,305114,7/29/2013,Bhuvana Mallika,Senior Analyst,bhuvanamallika.v@globallogic.com,95445989,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+6,305115,7/29/2013,Veera Pratyush Kumar Dama,Analyst,pratyush.dama@globallogic.com,95881937,Ashok Babu Ravuri,Ashok.babu@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,1,0
+7,305118,7/29/2013,Shruthi Aniyambeth,Senior Analyst,shruthi.a@globallogic.com,95853804,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+8,305120,7/29/2013,Gouthami Mulinti,Analyst,mulinti.gouthami@globallogic.com,95605355,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+9,305122,7/29/2013,Sai Kiran Myneni,Analyst,sai.kiran@globallogic.com,95373553,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+10,305126,7/29/2013,Srikanth Bodipudi,Analyst,srikanth.bodipudi@globallogic.com,94968997,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+11,305134,8/1/2013,Nagarjuna Bobba,Analyst,Nagarjuna.Bobba@globallogic.com,95350732,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+12,305135,8/1/2013,Anil Kumar Davuluri,Senior Analyst,Anil.Davuluri@globallogic.com,95449485,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+13,305872,11/18/2013,Sandeep Kumar Banala,Analyst,banala.kumar@globallogic.com,95634187,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+14,305873,11/18/2013,Pooja Varma Pogulaguntla,Senior Analyst,pooja.pogulaguntla@globallogic.com,95234748,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+15,305875,11/18/2013,Padma Priya Sahu,Analyst,padma.pandava@globallogic.com,95606244,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+16,305877,11/18/2013,Prasanna Kumar Palai,Analyst,prasanna.dalai@globallogic.com,95712622,Ashok Babu Ravuri,Ashok.babu@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,1,0
+17,305878,11/18/2013,Siva Kumar Bonu,Analyst,siva.bonu@globallogic.com,95748373,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+18,305882,11/18/2013,Sandeep Nara,Analyst,nara.naidu@globallogic.com,95332161,Bhuvana Mallika,bhuvanamallika.v@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,5,0
+19,305884,11/18/2013,Sravanthi Burra,Analyst,sravanthi.burra@globallogic.com,95837168,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+20,305916,11/25/2013,Das Jaya Singh Guduru,Analyst,das.guduru@globallogic.com,95870351,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+21,305924,11/25/2013,Ramya B,Analyst,ramya.bhagam@globallogic.com,95893621,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+22,306879,3/10/2014,Yashwanth,Senior Analyst,Yash.wanth@globallogic.com,95554903,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+23,306880,3/10/2014,Lakshmi Prasanna Ammineni,Analyst,Lakshmi.Ammineni@globallogic.com,95626059,Bhuvana Mallika,bhuvanamallika.v@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,5,0
+24,307921,7/21/2014,Rajasekhar Yeluri,Analyst,Rajasekar.Yeluri@globallogic.com,95639189,Bhuvana Mallika,bhuvanamallika.v@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,5,0
+25,307924,7/21/2014,Divyateja Eluri,Analyst,Divya.teja@globallogic.com,95438996,Ashok Babu Ravuri,Ashok.babu@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,1,0
+26,308236,9/1/2014,Kishore G,Analyst,kishore.garlapati@globallogic.com,95643705,Ashok Babu Ravuri,Ashok.babu@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,1,0
+27,308238,9/1/2014,Eswar Rao K,Analyst,eswar.kommineni@globallogic.com,95448904,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+28,308240,9/1/2014,Siva Naga Prasad Jalla,Analyst,siva.jalla@globallogic.com,95316852,Bhuvana Mallika,bhuvanamallika.v@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,5,0
+29,308241,9/1/2014,Sravya Maddipati,Analyst,sravya.dhanekula@globallogic.com,95528329,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+30,308444,10/6/2014,Kavya Dodla,Analyst,kavya.dodla@globallogic.com,95511856,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,,,Bloom Reach,55,2
+31,308445,10/6/2014,Ravi kanth Aremanda,Analyst,ravikanth.chowdary@globallogic.com,95311562,Ashok Babu Ravuri,Ashok.babu@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,1,0
+32,308446,10/6/2014,Ramya Kolla,Analyst,ramya.kolla@globallogic.com,95292556,Ashok Babu Ravuri,Ashok.babu@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,1,0
+33,308564,10/13/2014,Anusha Mulluri,Analyst,anusha.mulluri@globallogic.com,94946761,Bhuvana Mallika,bhuvanamallika.v@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,5,0
+34,308565,10/13/2014,Manasa Chaganti,Analyst,manasa.chaganti@globallogic.com,95709942,Ashok Babu Ravuri,Ashok.babu@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,1,0
+35,308699,11/12/2014,Madankumar Bathina,Analyst,madankumar.bathina@globallogic.com,95472507,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+36,308700,11/12/2014,Balakrishna Kota,Analyst,balakrishna.kota@globallogic.com,95143232,Bhuvana Mallika,bhuvanamallika.v@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,5,0
+37,308704,11/13/2014,Rahul Challa,Analyst,rahul.challa@globallogic.com,95141761,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+38,308715,11/17/2014,Krishna Mohan Gaddi,Analyst,krishna.mohan1@globallogic.com,95452540,Bhuvana Mallika,bhuvanamallika.v@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,5,0
+39,308717,11/17/2014,Sunanda Udayabhanu Arlagada,Analyst,asudaya.bhanu@globallogic.com,95105234,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+40,308718,11/17/2014,Govardhan Rao Gurram,Analyst,govardhan.rao@globallogic.com,95807631,Bhuvana Mallika,bhuvanamallika.v@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,5,0
+41,309012,1/21/2015,Navitha Ravilla,Analyst,navitha.ravilla@globallogic.com,95019958,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+42,309262,3/9/2015,Nirmala Alekya,Analyst,alekya.nirmala@globallogic.com,95707779,Bhuvana Mallika,bhuvanamallika.v@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,5,0
+43,309263,3/9/2015,Anand Rahul B,Analyst,anand.rahul1@globallogic.com,94998979,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+44,309264,3/9/2015,Sai Teja Addala,Analyst,saiteja.addala@globallogic.com,95945990,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+45,309265,3/9/2015,Mounika Mummadi,Analyst,mounika.mummadi@globallogic.com,95524777,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+46,309266,3/9/2015,Umamani Kondeti,Analyst,uma.kondeti@globallogic.com,95575179,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+47,309267,3/9/2015,Purushotham Mundluru,Analyst,purushotham.mundluru@globallogic.com,95071809,Ashok Babu Ravuri,Ashok.babu@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,1,0
+48,309669,4/20/2015,Sridivya Konatham,Analyst,sridivya.konatham@globallogic.com,95528220,Bhuvana Mallika,bhuvanamallika.v@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,5,0
+49,309667,4/20/2015,Adarshregulige Matam,Analyst,adarshregulige.matam@globallogic.com,95295360,Bhuvana Mallika,bhuvanamallika.v@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,5,0
+50,309670,4/20/2015,Sekhar Kamati,Analyst,sekhar.kamati@globallogic.com,95031613,Ashok Babu Ravuri,Ashok.babu@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,1,0
+51,309668,4/20/2015,Udaykumar Naidu,Analyst,udaykumarnaidu.nara@globallogic.com,95342437,Anil Kumar Davuluri,anil.davuluri@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,12,0
+52,308810,12/1/2014,Garapati Yaswanth,Analyst,garapati.yaswanth@globallogic.com,95199753,Bhuvana Mallika,bhuvanamallika.v@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,5,0
+53,307102,4/1/2014,Alekhya S,Analyst,Alekhya.Subbisetty@globallogic.com,95025556,Ashok Babu Ravuri,Ashok.babu@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,1,0
+54,307096,4/1/2014,Prudhvi Gottipati,Analyst,Prudhvi.Gottipati@globallogic.com,95866571,Ashok Babu Ravuri,Ashok.babu@globallogic.com,Ravikrishna Kothuri,Ravikrishna.Kothuri@globallogic.com,Bloom Reach,1,0
+55,300912,3/12/2007,RaviKrishna Kothuri,Manager,ravikrishna.kothuri@globallogic.com,9985001803,,,,,,0,1
