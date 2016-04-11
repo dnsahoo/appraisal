@@ -142,9 +142,11 @@ class IndexController extends AbstractActionController {
              * update data into employee appraisal table
              */
             $data['period'] = $request->getPost('period');
-            if ($emp_details->complete == 0) {
+            //implementing save for later
+            if ($emp_details->complete == 0 && $request->getPost('save_for_later') == '0') {
                 $data['complete'] = '3';
             }
+//            $data['last_updated'] = date('Y-m-d H:i:s', time());
             $emp_id = $this->getEmpAprslTable()->updateEmpAprsl($data, $emp_details->id);
 
             /*
