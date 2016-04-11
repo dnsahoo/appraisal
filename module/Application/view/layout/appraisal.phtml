@@ -65,7 +65,7 @@ if($role > 0){
                                 ->render('success', array('alert', 'alert-success'));
                        ?>
 <!-- Form Name -->
-<legend>GlobalLogic Self Appraisal form for the period 2015-16 <?php echo ($login_user_role > 0)?' - Review':''?><span style="float: right;"><?php
+<legend>GlobalLogic Self Appraisal form for the period 2015-16 <?php echo ($role != 0)?' - Review':''?><span style="float: right;"><?php
     if($login_user_role == 0){
     ?>
         <a href="/logout">Logout</a>

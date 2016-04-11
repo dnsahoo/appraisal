@@ -138,6 +138,8 @@ class IndexController extends AbstractActionController {
 
         $request = $this->getRequest();
         if ($request->isPost()) {
+            \Zend\Debug\Debug::dump($request->getPost('save_for_later'));
+            die;
             /*
              * update data into employee appraisal table
              */
@@ -199,7 +201,7 @@ class IndexController extends AbstractActionController {
             //email code will be here
             
             /*
-            if((int)$request->getPost('save_for_later') == 1){
+            if((int)$request->getPost('save_for_later') == '1'){
              
             $manageremail1 = $emp_details->mgr1_email;
             $manageremail2 = $emp_details->mgr2_email;
