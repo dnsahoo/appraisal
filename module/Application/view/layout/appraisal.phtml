@@ -39,6 +39,10 @@
             margin-bottom: 10px;
         }
         hr{border-top: 1px solid #521717 !important;}
+		.textarea 
+		{
+		    width: 550px !important;
+		}
   </style>  
     
     
@@ -181,7 +185,7 @@ if($login_user_role > 0){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="major_responsibilities" id="major_responsibilities" placeholder="Major Responsibilities / KRA's" class="form-control"  cols='20' rows='5' <?php echo $disableTag?'disabled':''; ?>><?php echo isset($feedBack->major_resoponsbilties)?$feedBack->major_resoponsbilties:''; ?></textarea>
+  <textarea name="major_responsibilities" id="major_responsibilities" placeholder="Major Responsibilities / KRA's" class="form-control textarea"  cols='20' rows='5' <?php echo $disableTag?'disabled':''; ?>><?php echo isset($feedBack->major_resoponsbilties)?$feedBack->major_resoponsbilties:''; ?></textarea>
     </div>
   </div>
 </div>
@@ -194,7 +198,7 @@ if($login_user_role > 0){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="manager_comments" placeholder="Manager Comments" class="form-control"  cols='20' rows='5'></textarea>
+  <textarea name="manager_comments" placeholder="Manager Comments" class="form-control textarea"  cols='20' rows='5'></textarea>
     </div>
   </div>
 </div>
@@ -216,6 +220,8 @@ foreach($appraisals as $ky => $val){
         <input name="self_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" type="range" min="0" max="5" data-rangeSlider value="<?php echo is_array($val)?$val['aprsl_rate_id']:'';?>" <?php echo $disableTag?'disabled':'';?>/>
 	<output name="self_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></output>
     </div>
+	<i>Not meets Expectations</i>
+	<i style="float:right;">Outstanding</i>
   </div>
 </div>
 
@@ -226,7 +232,7 @@ foreach($appraisals as $ky => $val){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="key_pointers_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Key Pointers" class="form-control"  cols='20' rows='5' <?php echo $disableTag?'disabled':'';?>><?php echo is_array($val)?$val['key_pointers']:'';?></textarea>
+  <textarea name="key_pointers_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Key Pointers" class="form-control textarea"  cols='20' rows='5' <?php echo $disableTag?'disabled':'';?>><?php echo is_array($val)?$val['key_pointers']:'';?></textarea>
     </div>
   </div>
 </div>
@@ -254,7 +260,7 @@ foreach($appraisals as $ky => $val){
         <div class="col-md-4 inputGroupContainer">
         <div class="input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-      <textarea name="reporting_managers_comments_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Comments" class="form-control"  cols='20' rows='5' <?php echo ($role==1)?'disabled':'';?>><?php echo is_array($val)?$val['reporting_comment']:'';?> </textarea>
+      <textarea name="reporting_managers_comments_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Comments" class="form-control textarea"  cols='20' rows='5' <?php echo ($role==1)?'disabled':'';?>><?php echo is_array($val)?$val['reporting_comment']:'';?> </textarea>
         </div>
       </div>
     </div>
@@ -273,6 +279,8 @@ foreach($appraisals as $ky => $val){
 	    <input name="managers_rating_<?php echo is_array($val)?$val['id']:$val->id; ?>" type="range" min="0" max="5" data-rangeSlider value="<?php echo (is_array($val) && isset($val['manager_ratting']))?$val['manager_ratting']:0;?>" />    
         <output name="managers_rate_result_<?php echo is_array($val)?$val['id']:$val->id; ?>"></output>
         </div>
+		<i>Not meets Expectations</i>
+	   <i style="float:right;">Outstanding</i>
       </div>
     </div>
 
@@ -283,7 +291,7 @@ foreach($appraisals as $ky => $val){
         <div class="col-md-4 inputGroupContainer">
         <div class="input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-      <textarea name="comments_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Comments" class="form-control"  cols='20' rows='5'><?php echo is_array($val)?$val['comment']:'';?> </textarea>
+      <textarea name="comments_<?php echo is_array($val)?$val['id']:$val->id; ?>" placeholder="Comments" class="form-control textarea"  cols='20' rows='5'><?php echo is_array($val)?$val['comment']:'';?> </textarea>
         </div>
       </div>
     </div>
@@ -301,7 +309,7 @@ foreach($appraisals as $ky => $val){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="extra_mile" placeholder="Extra-mile(optional)" class="form-control"  cols='20' rows='5' <?php echo $disableTag?'disabled':''; ?>><?php echo isset($feedBack->extra_mile)?$feedBack->extra_mile:''; ?></textarea>
+  <textarea name="extra_mile" placeholder="Extra-mile(optional)" class="form-control textarea"  cols='20' rows='5' <?php echo $disableTag?'disabled':''; ?>><?php echo isset($feedBack->extra_mile)?$feedBack->extra_mile:''; ?></textarea>
     </div>
   </div>
 </div>
@@ -315,7 +323,7 @@ if($role > 0 && !$direct_reporting_to_mngr){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="e_rpt_manager_comment" placeholder="Manager/Lead Comments" class="form-control"  cols='20' rows='5' <?php echo ($role==1)?'disabled':'';?>><?php echo isset($feedBack->e_rpt_manager_comment)?$feedBack->e_rpt_manager_comment:''; ?></textarea>
+  <textarea name="e_rpt_manager_comment" placeholder="Manager/Lead Comments" class="form-control textarea"  cols='20' rows='5' <?php echo ($role==1)?'disabled':'';?>><?php echo isset($feedBack->e_rpt_manager_comment)?$feedBack->e_rpt_manager_comment:''; ?></textarea>
     </div>
   </div>
 </div>
@@ -330,7 +338,7 @@ if($role == 1){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="extra_mile_comments" placeholder="Manager/Lead Comments" class="form-control"  cols='20' rows='5'><?php echo isset($feedBack->e_manager_comment)?$feedBack->e_manager_comment:''; ?></textarea>
+  <textarea name="extra_mile_comments" placeholder="Manager/Lead Comments" class="form-control textarea"  cols='20' rows='5'><?php echo isset($feedBack->e_manager_comment)?$feedBack->e_manager_comment:''; ?></textarea>
     </div>
   </div>
 </div>
@@ -342,7 +350,7 @@ if($role == 1){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="notable_accomplishments" placeholder="Notable Accomplishments" class="form-control"  cols='20' rows='5' <?php echo $disableTag?'disabled':''; ?>><?php echo isset($feedBack->notable_accomplishments)?$feedBack->notable_accomplishments:''; ?></textarea>
+  <textarea name="notable_accomplishments" placeholder="Notable Accomplishments" class="form-control textarea"  cols='20' rows='5' <?php echo $disableTag?'disabled':''; ?>><?php echo isset($feedBack->notable_accomplishments)?$feedBack->notable_accomplishments:''; ?></textarea>
     </div>
   </div>
 </div>
@@ -356,7 +364,7 @@ if($role > 0 && !$direct_reporting_to_mngr){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="n_rpt_manager_comment" placeholder="Manager/Lead Comments" class="form-control"  cols='20' rows='5' <?php echo ($role==1)?'disabled':'';?>><?php echo isset($feedBack->n_rpt_manager_comment)?$feedBack->n_rpt_manager_comment:''; ?></textarea>
+  <textarea name="n_rpt_manager_comment" placeholder="Manager/Lead Comments" class="form-control textarea"  cols='20' rows='5' <?php echo ($role==1)?'disabled':'';?>><?php echo isset($feedBack->n_rpt_manager_comment)?$feedBack->n_rpt_manager_comment:''; ?></textarea>
     </div>
   </div>
 </div>
@@ -369,7 +377,7 @@ if($role == 1){
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-  <textarea name="notable_accom_comments" placeholder="Manager/Lead Comments" class="form-control"  cols='20' rows='5'><?php echo isset($feedBack->n_manager_comment)?$feedBack->n_manager_comment:''; ?></textarea>
+  <textarea name="notable_accom_comments" placeholder="Manager/Lead Comments" class="form-control textarea"  cols='20' rows='5'><?php echo isset($feedBack->n_manager_comment)?$feedBack->n_manager_comment:''; ?></textarea>
     </div>
   </div>
 </div>
