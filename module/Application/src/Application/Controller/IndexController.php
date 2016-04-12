@@ -139,6 +139,13 @@ class IndexController extends AbstractActionController {
         $request = $this->getRequest();
         if ($request->isPost()) {
             /*
+             * redirect to same page, if someone try to make changes after last date
+             * i.e check wheather make_disable is '1' or not
+             */
+            if($emp_details->make_disable == '1'){
+                return $this->redirect()->toRoute('appraisal');
+            }
+            /*
              * update data into employee appraisal table
              */
             $data['period'] = $request->getPost('period');
@@ -304,7 +311,13 @@ class IndexController extends AbstractActionController {
                     ->addMessage("You have succcessfuly submited your appraisal form.");
             return $this->redirect()->toRoute('appraisal');
         }
-
+        /**
+         * make disable for editing own appraisal form
+         */
+        $disable_db = false;
+        if($emp_details->make_disable == '1'){
+            $disable_db = true;
+        }
         $feedBack = $this->getFeedBackTable()->getFeedbackId('', $emp_details->id);
         $this->layout()->setVariable('feedBack', $feedBack);
         $this->layout()->setVariable('emp_details', $emp_details);
@@ -312,6 +325,7 @@ class IndexController extends AbstractActionController {
         $this->layout()->setVariable('action', 'appraisal');
         $this->layout()->setVariable('appraisals', $appraisals);
         $this->layout()->setVariable('login_user_role', $login_user_role);
+        $this->layout()->setVariable('disable_db', $disable_db);
     }
 
     /**

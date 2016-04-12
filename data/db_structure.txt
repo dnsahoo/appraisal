@@ -46,4 +46,5 @@ feedback
 	manager_lead_comment
 	notable_accomplishments
 	overall_fb
-	
+
+ALTER TABLE `employeeappraisal` ADD `make_disable` ENUM('1','0') NOT NULL DEFAULT '0' COMMENT 'after last date of submission, we need to manually make it 1, so that they can not edit their form' AFTER `change_pswd`;	

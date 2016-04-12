@@ -55,10 +55,9 @@
 <form class="well form-horizontal" action="<?php echo '/'.$action; ?>" method="post"  id="contact_form">
 <fieldset>
 <?php
-$disable_db = false;
 $disableTag = false;
 $direct_reporting_to_mngr = ($emp_details->role == '2')?true:false;
-if($role > 0){
+if($role > 0 || $disable_db == true){
     $disableTag = true;
 }
 

@@ -25,6 +25,7 @@ class Employeeappraisal {
     public $mgr2_name;
     public $mgr2_email;
     public $parent;
+    public $make_disable;
     public $role;
     protected $inputFilter;
 
@@ -47,6 +48,7 @@ class Employeeappraisal {
         $this->mgr2_email = (isset($data['mgr2_email'])) ? $data['mgr2_email'] : null; 
         $this->parent = (isset($data['parent'])) ? $data['parent'] : null; 
         $this->role = (isset($data['role'])) ? $data['role'] : null; 
+        $this->make_disable = (isset($data['make_disable'])) ? $data['make_disable'] : '0'; 
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {
